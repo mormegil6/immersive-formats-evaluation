@@ -27,9 +27,9 @@ For methodology, interpretation, and results discussion, please refer to the mai
 ## Data
 
 **Data file**: `data/benchmarking.txt`  
-**Formats**: 11 immersive audio formats (including 7OA-MagLS reference)  
+**Formats**: 11 immersive audio formats (including 7OA reference)  
 **Metrics**: BAM-Q and BINAQUAL model predictions  
-**Test signal**: DeusExMachina orchestral excerpt
+**Test signal**: *"Deus Ex Machina"* choral recording
 
 The analysis algorithmically selects 4 independent metrics (|r| < 0.80) for statistical analysis. See the paper for detailed metric selection rationale.
 
@@ -69,6 +69,7 @@ If you use this data or analysis code, please cite the main paper:
 
 ## Notes
 
+- the input signals for the benchmarking analysis are binaural renders of the [*"Deus Ex Machina"*](https://push.fm/fl/achpg-deusexmachina) 7OA choral recording, encoded to various immersive audio formats
 - The analysis script uses algorithmic metric selection (correlation-based) with no hard-coded parameters
 - All analytical choices are justified in the paper
 - The analysis pipeline can be adapted for different datasets by replacing `data/benchmarking.txt`
