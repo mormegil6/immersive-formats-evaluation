@@ -1,0 +1,295 @@
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_1OA-YT_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 1.2296
+        SNR_ac: 2.9328
+    SNR_dc_fix: 1.2296
+    SNR_ac_fix: 0.7318
+           OPM: 50.3346
+       OPM_fix: 62.6163
+***********************
+***binaural measures***
+***********************
+binQ: 64
+ILDdiff: 2536.0077
+ITDdiff: 0.00014795
+IVSdiff: 0.028858
+***********************
+****overall measure***
+***********************
+overall_measure: 0.4992
+
+vnsim_0: 0.223118
+vnsim_1: 0.223405
+LS:  0.049845616103239634
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_42pIKO-MagLS_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 1.0912
+        SNR_ac: 4.3318
+    SNR_dc_fix: 1.0912
+    SNR_ac_fix: 0.5052
+           OPM: 45.6389
+       OPM_fix: 66.3338
+***********************
+***binaural measures***
+***********************
+binQ: 49
+ILDdiff: 6453.9936
+ITDdiff: 0.00010934
+IVSdiff: 0.026578
+***********************
+****overall measure***
+***********************
+overall_measure: 0.3822
+
+vnsim_0: 0.262373
+vnsim_1: 0.262659
+LS:  0.0689145166746991
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_Atmos-native_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 2.0573
+        SNR_ac: 4.6992
+    SNR_dc_fix: 2.0573
+    SNR_ac_fix: 0.2932
+           OPM: 41.7365
+       OPM_fix: 59.3488
+***********************
+***binaural measures***
+***********************
+binQ: 48
+ILDdiff: 6516.9067
+ITDdiff: 0.00011512
+IVSdiff: 0.025953
+***********************
+****overall measure***
+***********************
+overall_measure: 0.3744
+
+vnsim_0: 0.216468
+vnsim_1: 0.213581
+LS:  0.04623353878276123
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_42pIKO-Atmos_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 2.1465
+        SNR_ac: 4.5535
+    SNR_dc_fix: 2.1465
+    SNR_ac_fix: 0.1768
+           OPM: 41.8857
+       OPM_fix: 59.5590
+***********************
+***binaural measures***
+***********************
+binQ: 69
+ILDdiff: 3394.8221
+ITDdiff: 9.2969e-05
+IVSdiff: 0.022654
+***********************
+****overall measure***
+***********************
+overall_measure: 0.49758
+
+vnsim_0: 0.210393
+vnsim_1: 0.208966
+LS:  0.043964995137007246
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_Auro3D-native_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 1.3649
+        SNR_ac: 3.6489
+    SNR_dc_fix: 1.3649
+    SNR_ac_fix: 0.5818
+           OPM: 47.0312
+       OPM_fix: 62.7517
+***********************
+***binaural measures***
+***********************
+binQ: 60
+ILDdiff: 4267.3231
+ITDdiff: 9.2264e-05
+IVSdiff: 0.034163
+***********************
+****overall measure***
+***********************
+overall_measure: 0.468
+
+vnsim_0: 0.218813
+vnsim_1: 0.21539
+LS:  0.047130303710896986
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_42pIKO-Auro3D_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 1.3564
+        SNR_ac: 4.3349
+    SNR_dc_fix: 1.3564
+    SNR_ac_fix: 0.4282
+           OPM: 44.7816
+       OPM_fix: 64.3218
+***********************
+***binaural measures***
+***********************
+binQ: 46
+ILDdiff: 5489.7488
+ITDdiff: 0.00010685
+IVSdiff: 0.049488
+***********************
+****overall measure***
+***********************
+overall_measure: 0.3588
+
+vnsim_0: 0.209278
+vnsim_1: 0.209787
+LS:  0.043903885724064465
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_3OA-IAMF_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 1.6852
+        SNR_ac: 2.3177
+    SNR_dc_fix: 1.6852
+    SNR_ac_fix: 0.8394
+           OPM: 51.0277
+       OPM_fix: 58.0580
+***********************
+***binaural measures***
+***********************
+binQ: 88
+ILDdiff: 1436.3566
+ITDdiff: 5.6989e-05
+IVSdiff: 0.010485
+***********************
+****overall measure***
+***********************
+overall_measure: 0.4865
+
+vnsim_0: 0.227937
+vnsim_1: 0.229805
+LS:  0.052380888454586536
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_Sony360RA-native_binaural_headphone_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 5.6030
+        SNR_ac: 4.4069
+    SNR_dc_fix: 5.6030
+    SNR_ac_fix: 0.5752
+           OPM: 34.7596
+       OPM_fix: 41.8997
+***********************
+***binaural measures***
+***********************
+binQ: 50
+ILDdiff: 6382.9938
+ITDdiff: 0.00010839
+IVSdiff: 0.026122
+***********************
+****overall measure***
+***********************
+overall_measure: 0.34484
+
+vnsim_0: 0.228087
+vnsim_1: 0.228367
+LS:  0.05208750696585779
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_42pIKO-Sony360RA_binaural_headphone_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 9.5853
+        SNR_ac: 3.5086
+    SNR_dc_fix: 9.5853
+    SNR_ac_fix: 0.7573
+           OPM: 29.9927
+       OPM_fix: 32.5967
+***********************
+***binaural measures***
+***********************
+binQ: 65
+ILDdiff: 3488.4707
+ITDdiff: 8.4924e-05
+IVSdiff: 0.03341
+***********************
+****overall measure***
+***********************
+overall_measure: 0.23581
+
+vnsim_0: 0.215082
+vnsim_1: 0.214707
+LS:  0.046179614628373035
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_2OA-TBE_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 4.3632
+        SNR_ac: 3.0573
+    SNR_dc_fix: 4.3632
+    SNR_ac_fix: 0.9246
+           OPM: 40.0725
+       OPM_fix: 44.7095
+***********************
+***binaural measures***
+***********************
+binQ: 75
+ILDdiff: 2385.1031
+ITDdiff: 6.8847e-05
+IVSdiff: 0.025883
+***********************
+****overall measure***
+***********************
+overall_measure: 0.37303
+
+vnsim_0: 0.388887
+vnsim_1: 0.383266
+LS:  0.1490470621623533
+
+
+DeusExMachina_7OA-MagLS_binaural_N vs DeusExMachina_7OA-MagLS_binaural_N
+***********************
+****monaural measures**
+***********************
+        SNR_dc: 0
+        SNR_ac: 0
+    SNR_dc_fix: 0
+    SNR_ac_fix: 0
+           OPM: 715.4003
+       OPM_fix: 725.5641
+***********************
+***binaural measures***
+***********************
+binQ: 100
+ILDdiff: 0
+ITDdiff: 0
+IVSdiff: 0
+***********************
+****overall measure***
+***********************
+overall_measure: 0.72263
+
+vnsim_0: 1.0
+vnsim_1: 1.0
+LS:  1.0
