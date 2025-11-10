@@ -86,5 +86,5 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareA
 
 ## Contact
 
-For questions regarding this supplementary material, please address to me via e-mail: bartlomiej.mroz@pg.edu.pl
+For questions regarding this supplementary material, please contact me via e-mail: bartlomiej.mroz@pg.edu.pl
 
