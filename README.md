@@ -29,7 +29,7 @@ For methodology, interpretation, and results discussion, please refer to the mai
 **Data file**: `data/benchmarking.txt`  
 **Formats**: 11 immersive audio formats (including 7OA reference)  
 **Metrics**: BAM-Q and BINAQUAL model predictions  
-**Test signal**: *"Deus Ex Machina"* choral recording
+**Test signal**: 7OA choral recording
 
 The analysis algorithmically selects 4 independent metrics (|r| < 0.80) for statistical analysis. See the paper for detailed metric selection rationale.
 
