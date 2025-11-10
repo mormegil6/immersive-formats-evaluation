@@ -53,7 +53,7 @@ Full correlation matrix (all available metrics):
 ### Excluded 4 metrics due to high correlation (|r| >= 0.80):
       binQ, SNR_ac, vnsim_0, OPM_fix
 
-### Excluding metrics based on BAM-Q / Binaqual paper content:
+### Excluding metrics based on BAM-Q paper:
       SNR_dc_fix, SNR_ac_fix, IVSdiff
 
 Rationale:
