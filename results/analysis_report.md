@@ -1,10 +1,13 @@
 # Immersive Audio Benchmarking - Statistical Analysis Results
 
 ## 1. Dataset Overview
-    Total formats analyzed: 11 
-    Reference formats: 7OA-MagLS 
-    Non-commercial formats: 42pIKO-MagLS 
-    Commercial formats: 1OA-YT, Atmos-native, 42pIKO-Atmos, Auro3D-native, 42pIKO-Auro3D, 3OA-IAMF, Sony360RA-native, 42pIKO-Sony360RA, 2OA-TBE 
+Total formats analyzed: 11 
+
+Reference formats: 7OA-MagLS
+
+Non-commercial formats: 42pIKO-MagLS 
+
+Commercial formats: 1OA-YT, Atmos-native, 42pIKO-Atmos, Auro3D-native, 42pIKO-Auro3D, 3OA-IAMF, Sony360RA-native, 42pIKO-Sony360RA, 2OA-TBE 
 
 
 ## 2. Raw Data
@@ -36,11 +39,12 @@
     11      0  0          0                0.723   1       1     1     
 
 ## 3. Metric Selection and Redundancy Removal
-    Full correlation matrix (all available metrics):
-      Excluding SNR_dc (r=1.000 with SNR_dc_fix, keeping _fix version)
-      Excluding OPM (r=1.000 with OPM_fix, keeping _fix version)
-      Excluding vnsim_1 (r=1.000 with vnsim_0, perfectly correlated)
+Full correlation matrix (all available metrics):
 
+    Excluding SNR_dc (r=1.000 with SNR_dc_fix, keeping _fix version)
+    Excluding OPM (r=1.000 with OPM_fix, keeping _fix version)
+    Excluding vnsim_1 (r=1.000 with vnsim_0, perfectly correlated)
+      
                     SNR_ac SNR_dc_fix SNR_ac_fix OPM_fix   binQ ILDdiff ITDdiff
     SNR_ac           1.000      0.250      0.124  -0.823 -0.892   0.874   0.780
     SNR_dc_fix       0.250      1.000      0.460  -0.382 -0.160   0.146   0.095
