@@ -1,6 +1,6 @@
-# Immersive Audio Formats Benchmarking - Supplementary Materials
-
 [![R](https://img.shields.io/badge/R-4.0+-blue.svg)]() [![tidyverse](https://img.shields.io/badge/tidyverse-2.0-blue.svg)]() [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+# Immersive Audio Formats Benchmarking - Supplementary Materials
 
 Supplementary materials for the paper: **"Benchmarking Widely Adopted Immersive Audio Formats Using Objective Binaural Quality Metrics"**
 
