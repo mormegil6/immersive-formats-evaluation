@@ -1,13 +1,10 @@
 # Immersive Audio Benchmarking - Statistical Analysis Results
 
 ## 1. Dataset Overview
-Total formats analyzed: 11 
-
-Reference formats: 7OA-MagLS
-
-Non-commercial formats: 42pIKO-MagLS 
-
-Commercial formats: 1OA-YT, Atmos-native, 42pIKO-Atmos, Auro3D-native, 42pIKO-Auro3D, 3OA-IAMF, Sony360RA-native, 42pIKO-Sony360RA, 2OA-TBE 
+- Total formats analyzed: 11 
+- Reference formats: 7OA-MagLS
+- Non-commercial formats: 42pIKO-MagLS 
+- Commercial formats: 1OA-YT, Atmos-native, 42pIKO-Atmos, Auro3D-native, 42pIKO-Auro3D, 3OA-IAMF, Sony360RA-native, 42pIKO-Sony360RA, 2OA-TBE 
 
 
 ## 2. Raw Data
@@ -70,7 +67,7 @@ Full correlation matrix (all available metrics):
     vnsim_0          -0.686           0.733   1.000  0.993
     LS               -0.683           0.756   0.993  1.000
 
-### Finding all independent metrics with |r| < 0.80 threshold:
+### Independent metrics with |r| < 0.80 threshold:
       1. SNR_dc_fix (BAM-Q signal-to-noise ratio (DC component))
       2. SNR_ac_fix (BAM-Q signal-to-noise ratio (AC component))
       3. ILDdiff (BAM-Q interaural level difference)
@@ -166,7 +163,6 @@ Rationale:
     11    ITD_Fold 2.596e+00
 
 ## 8. Overall vs Localization Correlation
-    Overall vs Localization Correlation:
     All formats (n = 11): r = 0.756, p = 0.0071
     Commercial only (n = 9): r = -0.113, p = 0.7725
 
