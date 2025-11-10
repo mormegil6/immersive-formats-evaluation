@@ -1,16 +1,13 @@
-Immersive Audio Benchmarking - Statistical Analysis Results
-================
+# Immersive Audio Benchmarking - Statistical Analysis Results
 
-    ========== IMMERSIVE AUDIO BENCHMARKING - STATISTICAL ANALYSIS ==========
-
-    --- 1. Dataset Overview ---
+## 1. Dataset Overview
     Total formats analyzed: 11 
     Reference formats: 7OA-MagLS 
     Non-commercial formats: 42pIKO-MagLS 
     Commercial formats: 1OA-YT, Atmos-native, 42pIKO-Atmos, Auro3D-native, 42pIKO-Auro3D, 3OA-IAMF, Sony360RA-native, 42pIKO-Sony360RA, 2OA-TBE 
 
-    --- 2. Raw Data ---
-    # A tibble: 11 × 15
+
+## 2. Raw Data
        test             SNR_dc SNR_ac SNR_dc_fix SNR_ac_fix   OPM OPM_fix  binQ
        <chr>             <dbl>  <dbl>      <dbl>      <dbl> <dbl>   <dbl> <dbl>
      1 1OA-YT             1.23   2.93       1.23      0.732  50.3    62.6    64
@@ -38,7 +35,7 @@ Immersive Audio Benchmarking - Statistical Analysis Results
     10   2385. 0.0000688  0.0259           0.373   0.389   0.383 0.149 
     11      0  0          0                0.723   1       1     1     
 
-    --- 3. Metric Selection and Redundancy Removal ---
+## 3. Metric Selection and Redundancy Removal
     Full correlation matrix (all available metrics):
       Excluding SNR_dc (r=1.000 with SNR_dc_fix, keeping _fix version)
       Excluding OPM (r=1.000 with OPM_fix, keeping _fix version)
@@ -69,8 +66,7 @@ Immersive Audio Benchmarking - Statistical Analysis Results
     vnsim_0          -0.686           0.733   1.000  0.993
     LS               -0.683           0.756   0.993  1.000
 
-    Finding all independent metrics with |r| < 0.80 threshold:
-    Found 7 independent metrics meeting |r| < 0.80 criterion:
+### Finding all independent metrics with |r| < 0.80 threshold:
       1. SNR_dc_fix (BAM-Q signal-to-noise ratio (DC component))
       2. SNR_ac_fix (BAM-Q signal-to-noise ratio (AC component))
       3. ILDdiff (BAM-Q interaural level difference)
@@ -79,40 +75,36 @@ Immersive Audio Benchmarking - Statistical Analysis Results
       6. overall_measure (BAM-Q composite perceptual quality)
       7. LS (BINAQUAL localization similarity)
 
-    Excluded 4 metrics due to high correlation (|r| >= 0.80):
+### Excluded 4 metrics due to high correlation (|r| >= 0.80):
       binQ, SNR_ac, vnsim_0, OPM_fix
 
-    Excluding metrics based on BAM-Q / Binaqual paper content:
-    Selected 4 metrics for analysis:
+### Excluding metrics based on BAM-Q / Binaqual paper content:
+      SNR_dc_fix, SNR_ac_fix, IVSdiff
+
+Rationale:
+- SNR_dc_fix, SNR_ac_fix: Signal-to-noise ratios quantifying signal power preservation rather than perceptual quality degradation (Fleßner et al., 2019).
+- IVSdiff: Binaural coherence measure conceptually redundant with selected ILDdiff/ITDdiff spatial cue metrics.
+- The 4 selected metrics provide complete perceptual coverage: overall quality (overall_measure), localization (LS), amplitude cues (ILDdiff), temporal cues (ITDdiff).
+
+### Selected 4 metrics for analysis:
       1. ILDdiff (BAM-Q interaural level difference)
       2. ITDdiff (BAM-Q interaural time difference)
       3. overall_measure (BAM-Q composite perceptual quality)
       4. LS (BINAQUAL localization similarity)
 
-    Excluded 3 metrics for conceptual reasons:
-      SNR_dc_fix, SNR_ac_fix, IVSdiff
-    Rationale:
-      - SNR_dc_fix, SNR_ac_fix: Signal-to-noise ratios quantifying signal power
-        preservation rather than perceptual quality degradation (Fleßner et al., 2019).
-      - IVSdiff: Binaural coherence measure conceptually redundant with selected
-        ILDdiff/ITDdiff spatial cue metrics.
-      - The 4 selected metrics provide complete perceptual coverage: overall quality
-        (overall_measure), localization (LS), amplitude cues (ILDdiff), temporal cues (ITDdiff).
-
-    Correlation validation for selected metric set:
+### Correlation validation for selected metric set:
                     ILDdiff ITDdiff overall_measure     LS
     ILDdiff           1.000   0.684          -0.660 -0.604
     ITDdiff           0.684   1.000          -0.556 -0.796
     overall_measure  -0.660  -0.556           1.000  0.756
     LS               -0.604  -0.796           0.756  1.000
 
-    Key pairwise correlations:
+### Key pairwise correlations:
       ITDdiff <-> LS: r = -0.796
       Maximum |r| in 4-metric set: 0.796
     All pairwise correlations |r| < 0.80 confirmed.
 
-    --- 4. Summary Statistics (4 Metrics) ---
-    # A tibble: 4 × 7
+## 4. Summary Statistics (4 Metrics)
       metric             Min         Max       Range         Mean       Median
       <chr>            <dbl>       <dbl>       <dbl>        <dbl>        <dbl>
     1 ILDdiff         0      6517.       6517.       3850.        3488.       
@@ -126,8 +118,7 @@ Immersive Audio Benchmarking - Statistical Analysis Results
     3    0.285    
     4    0.126    
 
-    --- 5. Euclidean Distance from Reference (Normalized) ---
-    # A tibble: 10 × 2
+## 5. Euclidean Distance from Reference (Normalized)
        test             euclidean_distance
        <chr>                         <dbl>
      1 3OA-IAMF                       4.15
@@ -141,8 +132,7 @@ Immersive Audio Benchmarking - Statistical Analysis Results
      9 Sony360RA                      6.05
     10 Atmos                          6.06
 
-    --- 6. Format Rankings (1 = Best) ---
-    # A tibble: 11 × 6
+## 6. Format Rankings (1 = Best)
        test             rank_overall rank_LS rank_ILDdiff rank_ITDdiff avg_rank
        <chr>                   <dbl>   <dbl>        <dbl>        <dbl>    <dbl>
      1 7OA ref.                    1       1            1            1     1   
@@ -157,7 +147,7 @@ Immersive Audio Benchmarking - Statistical Analysis Results
     10 42pIKO-Auro3D               9      11            8            7     8.75
     11 Atmos                       7       8           11           10     9   
 
-    --- 7. Spatial Cue Asymmetry (ILD vs ITD) ---
+## 7. Spatial Cue Asymmetry (ILD vs ITD)
             Metric     Value
     1       ILD_CV 5.692e-01
     2       ITD_CV 4.282e-01
@@ -171,25 +161,24 @@ Immersive Audio Benchmarking - Statistical Analysis Results
     10    ILD_Fold 4.537e+00
     11    ITD_Fold 2.596e+00
 
-    --- 8. Overall vs Localization Correlation ---
+## 8. Overall vs Localization Correlation
     Overall vs Localization Correlation:
     All formats (n = 11): r = 0.756, p = 0.0071
     Commercial only (n = 9): r = -0.113, p = 0.7725
 
-    --- 9. PCA Summary ---
+## 9. PCA Summary
     PC1 variance explained: 44.2 %
     PC2 variance explained: 31.7 %
     PC1+PC2 cumulative variance: 75.9 %
 
-    PCA Loadings:
+### PCA Loadings:
                         PC1     PC2
     ILDdiff          0.6201  0.3429
     ITDdiff          0.5864 -0.2774
     overall_measure -0.1804 -0.8040
     LS              -0.4889  0.3988
 
-    PCA Scores:
-    # A tibble: 10 × 3
+### PCA Scores:
             PC1    PC2 test            
           <dbl>  <dbl> <chr>           
      1  0.526   -1.90  1OA-YT          
