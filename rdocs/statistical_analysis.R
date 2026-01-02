@@ -28,7 +28,7 @@ remap_tests <- function(test_vec) {
 }
 
 # ========== Data Import ==========
-lines <- readLines("./data/benchmarking.txt")
+lines <- readLines("../data/benchmarking.txt")
 data_list <- list()
 current_comparison <- NULL
 current_data <- list()
