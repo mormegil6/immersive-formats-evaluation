@@ -31,7 +31,7 @@ For methodology, interpretation, and results discussion, please refer to the mai
 **Metrics**: BAM-Q and BINAQUAL model predictions  
 **Test signal**: 7OA choral recording
 
-The analysis algorithmically selects 4 independent metrics (|r| < 0.80) for statistical analysis. See the paper for detailed metric selection rationale.
+The analysis algorithmically selects 4 independent metrics (|r| < 0.80) for statistical analysis, then applies a two-tier structure: composite perceptual metrics (`overall_measure`, `LS`) are used for primary rankings and Euclidean distance, while spatial sub-metrics (`ILDdiff`, `ITDdiff`) are reported diagnostically. See the paper for detailed metric selection rationale.
 
 ## Reproducing the Analysis
 
@@ -49,13 +49,16 @@ Rscript rdocs/statistical_analysis.R
 
 The script performs the complete statistical analysis pipeline described in the paper:
 1. Data import and validation
-2. Redundancy detection and metric selection
-3. Summary statistics
-4. Deviation from reference (Euclidean distance)
-5. Format rankings
-6. Spatial asymmetry analysis (ILD vs ITD)
-7. Correlation analysis
-8. Principal component analysis
+2. Redundancy detection and metric selection (correlation threshold |r| < 0.80)
+3. Two-tier metric structure (primary: `overall_measure` + `LS`; diagnostic: `ILDdiff` + `ITDdiff`)
+4. Summary statistics
+5. Euclidean distance from reference (primary metrics only, to avoid double-counting)
+6. Format rankings (2-metric primary and 4-metric comparison, with rank change)
+7. Spatial cue asymmetry analysis (ILD vs ITD, diagnostic)
+8. Correlation analysis (descriptive r, no p-values — exhaustive dataset)
+9. BINAQUAL LS metric behavior (product vs mean formulation analysis)
+10. Within-category metric discrimination (Ambisonics vs channel/object-based)
+11. Quality space data (overall_measure vs LS for 2D scatter)
 
 **Output**: Console text with all analysis results (also available in `results/analysis_report.md`)
 
