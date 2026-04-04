@@ -16,7 +16,7 @@ For methodology, interpretation, and results discussion, please refer to the mai
 ```
 .
 ├── data/
-│   ├── benchmarking.txt           # Raw model predictions (11 formats, 15 metrics)
+│   ├── evaluation.txt           # Raw model predictions (11 formats, 15 metrics)
 ├── rdocs/
 │   ├── statistical_analysis.R     # Reproducible analysis script
 ├── results/
@@ -26,7 +26,7 @@ For methodology, interpretation, and results discussion, please refer to the mai
 
 ## Data
 
-**Data file**: `data/benchmarking.txt`  
+**Data file**: `data/evaluation.txt`  
 **Formats**: 11 immersive audio formats (including 7OA reference)  
 **Metrics**: BAM-Q and BINAQUAL model predictions  
 **Test signal**: 7OA choral recording
@@ -75,7 +75,7 @@ If you use this data or analysis code, please cite the main paper:
 - the input signals for the evaluation are binaural renders of the [*"Deus Ex Machina"*](https://push.fm/fl/achpg-deusexmachina) 7OA choral recording, encoded to various immersive audio formats
 - The analysis script uses algorithmic metric selection (correlation-based) with no hard-coded parameters
 - All analytical choices are justified in the paper
-- The analysis pipeline can be adapted for different datasets by replacing `data/benchmarking.txt`
+- The analysis pipeline can be adapted for different datasets by replacing `data/evaluation.txt`
 
 ## License
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# Statistical Analysis - Immersive Audio Benchmarking
+# Statistical Analysis - Immersive Audio Formats Evaluation
 # Reads raw data and prints statistical analysis outputs
 
 suppressPackageStartupMessages(library(tidyverse))
@@ -28,7 +28,7 @@ remap_tests <- function(test_vec) {
 }
 
 # ========== Data Import ==========
-lines <- readLines("./data/benchmarking.txt")
+lines <- readLines("./data/evaluation.txt")
 data_list <- list()
 current_comparison <- NULL
 current_data <- list()
@@ -77,7 +77,7 @@ data_analysis <- data_all %>% filter(category != "Experimental")
 commercial_formats <- data_analysis %>% filter(category == "Commercial")
 
 # ========== Output Results ==========
-cat("\n========== IMMERSIVE AUDIO BENCHMARKING - STATISTICAL ANALYSIS ==========\n\n")
+cat("\n========== IMMERSIVE AUDIO FORMATS EVALUATION - STATISTICAL ANALYSIS ==========\n\n")
 
 cat("--- 1. Dataset Overview ---\n")
 cat("Total formats analyzed:", nrow(data_analysis), "\n")
