@@ -1,11 +1,11 @@
 [![R](https://img.shields.io/badge/R-4.0+-blue.svg)]() [![tidyverse](https://img.shields.io/badge/tidyverse-2.0-blue.svg)]() [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-# Immersive Audio Formats Benchmarking - Supplementary Materials
+# Immersive Audio Formats Evaluation - Supplementary Materials
 
 Supplementary materials for the paper: **"Objective evaluation of immersive audio formats using BAM-Q and BINAQUAL binaural quality models: a case study with higher-order Ambisonics"**
 
 This repository contains:
-- Raw benchmarking data (BAM-Q and BINAQUAL model predictions)
+- Raw evaluation data (BAM-Q and BINAQUAL model predictions)
 - Reproducible statistical analysis script
 - Analysis outputs
 
@@ -72,7 +72,7 @@ If you use this data or analysis code, please cite the main paper:
 
 ## Notes
 
-- the input signals for the benchmarking analysis are binaural renders of the [*"Deus Ex Machina"*](https://push.fm/fl/achpg-deusexmachina) 7OA choral recording, encoded to various immersive audio formats
+- the input signals for the evaluation are binaural renders of the [*"Deus Ex Machina"*](https://push.fm/fl/achpg-deusexmachina) 7OA choral recording, encoded to various immersive audio formats
 - The analysis script uses algorithmic metric selection (correlation-based) with no hard-coded parameters
 - All analytical choices are justified in the paper
 - The analysis pipeline can be adapted for different datasets by replacing `data/benchmarking.txt`
