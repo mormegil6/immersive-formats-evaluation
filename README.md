@@ -79,6 +79,7 @@ If you use this data or analysis code, please cite the main paper:
 - The analysis script uses algorithmic metric selection (correlation-based) with no hard-coded parameters
 - All analytical choices are justified in the paper
 - The analysis pipeline can be adapted for different datasets by replacing `data/evaluation.txt`
+- An interactive browser-based visualizer for the IKO loudspeaker layout used in the evaluation is available at [mormegil6.github.io/42p-IKO-visualization](https://mormegil6.github.io/42p-IKO-visualization/)
 
 ## License
 
