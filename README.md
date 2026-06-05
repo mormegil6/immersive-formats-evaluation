@@ -2,7 +2,10 @@
 
 # Immersive Audio Formats Evaluation - Supplementary Materials
 
-Supplementary materials for the paper: **"Objective evaluation of immersive audio formats using BAM-Q and BINAQUAL binaural quality models: a case study with higher-order Ambisonics"**
+Supplementary materials for the paper:
+
+***"Objective evaluation of immersive audio formats using BAM-Q and BINAQUAL binaural quality models: a case study with higher-order Ambisonics"***  
+Bartłomiej Mróz · *Applied Acoustics*, Elsevier, 2026 [under review]
 
 This repository contains:
 - Raw evaluation data (BAM-Q and BINAQUAL model predictions)
