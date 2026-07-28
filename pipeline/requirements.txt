@@ -1,0 +1,19 @@
+# Pinned to the exact versions under which the BINAQUAL reference
+# implementation was validated.  These pins are not cosmetic: with newer
+# NumPy/SciPy/OpenCV the model's vnsim outputs drift by roughly 3%, because
+# NSIM is computed through cv2.remap and scipy.ndimage.convolve, whose
+# numerics changed between releases.  Under the pins below the pipeline
+# reproduces the published BINAQUAL figures bit-for-bit.
+#
+# Requires CPython 3.11 (NumPy 1.23.5 has no wheels for 3.12+).
+#
+#   python3.11 -m venv ~/.venvs/immersive-benchmarking
+#   ~/.venvs/immersive-benchmarking/bin/pip install -r requirements.txt
+#
+# Create the environment OUTSIDE any cloud-synced folder -- see README.
+
+matplotlib==3.7.2
+numpy==1.23.5
+opencv-python==4.10.0.84
+scipy==1.14.0
+soundfile==0.12.1

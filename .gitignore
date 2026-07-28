@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Meta Audio360 SDK -- proprietary, not redistributable.
+# Download separately; see pipeline/tbe/README.md.
+pipeline/tbe/include/
+pipeline/tbe/lib/
+pipeline/tbe/tbe_render
+
+# Build and environment artefacts
+__pycache__/
+*.pyc
+*.o
+.Rhistory

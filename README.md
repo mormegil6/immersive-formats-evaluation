@@ -1,16 +1,16 @@
-[![R](https://img.shields.io/badge/R-4.0+-blue.svg)]() [![tidyverse](https://img.shields.io/badge/tidyverse-2.0-blue.svg)]() [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![R](https://img.shields.io/badge/R-4.0+-blue.svg)]() [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)]() [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 # Immersive Audio Formats Evaluation - Supplementary Materials
 
 Supplementary materials for the paper:
 
-***"Objective evaluation of immersive audio formats using BAM-Q and BINAQUAL binaural quality models: a case study with higher-order Ambisonics"***  
-Bartłomiej Mróz · *Applied Acoustics*, Elsevier, 2026 [under review]
+***"Latency and anchor dependence in objective binaural quality metrics: a cross-format evaluation of immersive audio"***  
+Bartłomiej Mróz · Przemysław Danowski · *Applied Acoustics*, Elsevier, 2026 [under review]
 
 This repository contains:
-- Raw evaluation data (BAM-Q and BINAQUAL model predictions)
-- Reproducible statistical analysis script
-- Analysis outputs
+- The complete stimulus conditioning and scoring pipeline
+- Scored BAM-Q and BINAQUAL model predictions for every format, content item and reference anchor
+- The reproducible statistical analysis, and the per-figure data tables behind every figure in the paper
 
 For methodology, interpretation, and results discussion, please refer to the main paper.
 
@@ -19,51 +19,72 @@ For methodology, interpretation, and results discussion, please refer to the mai
 ```
 .
 ├── data/
-│   ├── evaluation.txt           # Raw model predictions (11 formats, 15 metrics)
-├── rdocs/
-│   ├── statistical_analysis.R     # Reproducible analysis script
+│   ├── stimuli.csv                    # stimulus inventory (item x format variant)
+│   ├── metrics_long.csv               # primary scored results (aligned stimuli)
+│   ├── metrics_long_noalign.csv       # control arm, renderer latency left uncompensated
+│   ├── metrics_long_segments.csv      # five-window segmented arm
+│   ├── conditioning_*.csv             # alignment and loudness diagnostics per run
+│   └── pairs*.csv                     # reference/test pair definitions
+├── pipeline/
+│   ├── src/                           # conditioning and scoring
+│   ├── analysis/                      # statistical analysis and figures (R)
+│   ├── tbe/                           # ambiX -> TBE encoding and offline rendering
+│   ├── run_all.sh                     # conditioning + scoring
+│   ├── run_analysis.sh                # analysis + figures + values.tex
+│   └── requirements.txt
 ├── results/
-│   └── analysis_report.md         # Complete analysis output
+│   ├── figure_data/                   # one table per figure
+│   └── figures/                       # the figures as published
 └── README.md
 ```
 
 ## Data
 
-**Data file**: `data/evaluation.txt`  
-**Formats**: 11 immersive audio formats (including 7OA reference)  
-**Metrics**: BAM-Q and BINAQUAL model predictions  
-**Test signal**: 7OA choral recording
+**Content items**: 3 professionally produced recordings, differing in genre and in how their Ambisonic masters were assembled  
+**Format variants**: 11, including the 7OA master used as the primary reference anchor  
+**Reference anchors**: 3 (7OA, 5OA, native Dolby Atmos), each scored against every variant  
+**Models**: BAM-Q (perceptual quality) and BINAQUAL (localisation similarity)
 
-The analysis algorithmically selects 4 independent metrics (|r| < 0.80) for statistical analysis, then applies a two-tier structure: composite perceptual metrics (`overall_measure`, `LS`) are used for primary rankings and Euclidean distance, while spatial sub-metrics (`ILDdiff`, `ITDdiff`) are reported diagnostically. See the paper for detailed metric selection rationale.
+The design is a randomized complete block: format variants are the treatments and content items are the blocks, with each format evaluated once per item. `metrics_long.csv` is the primary arm; `metrics_long_noalign.csv` repeats it identically except that renderer transport latency is left uncompensated, which isolates the effect of alignment; `metrics_long_segments.csv` repeats it over five windows per item.
+
+The `conditioning_*.csv` tables record what the conditioning stage did to each signal -- estimated lag, polarity, cross-correlation peak ratio, residual lag after correction, integrated loudness before normalisation, applied gain and resulting true peak -- so that every conditioning decision is auditable rather than implicit.
 
 ## Reproducing the Analysis
 
-### Prerequisites
+The statistical analysis runs from the scored results in `data/` and needs only base R. Re-running the scoring stage additionally needs Python, MATLAB and the two models.
 
-```r
-install.packages("tidyverse")
-```
-
-### Run the Analysis
+### Analysis only
 
 ```bash
-Rscript rdocs/statistical_analysis.R
+Rscript pipeline/analysis/analysis.R data results/figure_data values.tex
 ```
 
-The script performs the complete statistical analysis pipeline described in the paper:
-1. Data import and validation
-2. Redundancy detection and metric selection (correlation threshold |r| < 0.80)
-3. Two-tier metric structure (primary: `overall_measure` + `LS`; diagnostic: `ILDdiff` + `ITDdiff`)
-4. Summary statistics
-5. Euclidean distance from reference (primary metrics only, to avoid double-counting)
-6. Format rankings (2-metric primary and 4-metric comparison, with rank change)
-7. Spatial cue asymmetry analysis (ILD vs ITD, diagnostic)
-8. Correlation analysis (descriptive r, no p-values — exhaustive dataset)
-9. BINAQUAL LS metric behavior (product vs mean formulation analysis)
-10. Within-category metric discrimination (Ambisonics vs channel/object-based)
-11. Quality space data (overall_measure vs LS for 2D scatter)
+This regenerates every figure, every per-figure data table, and the macro file consumed by the manuscript. All values reported in the paper are emitted as LaTeX macros rather than transcribed, so the manuscript cannot drift from the analysis.
 
-**Output**: Console text with all analysis results (also available in `results/analysis_report.md`)
+### Full pipeline, including scoring
+
+```bash
+pip install -r pipeline/requirements.txt
+./pipeline/run_all.sh          # conditioning + scoring
+./pipeline/run_analysis.sh     # analysis + figures
+```
+
+Scoring additionally requires:
+- **BAM-Q** -- MATLAB implementation, obtained from its authors
+- **BINAQUAL** -- Python implementation
+- **Audio360 SDK** -- only for rebuilding the TBE variant; see `pipeline/tbe/README.md`
+
+The binaural stimuli themselves are not redistributed here, as they derive from commercially released productions.
+
+## Pipeline
+
+1. **Conditioning** (`src/prepare_stimuli.py`) -- estimates and removes the transport latency each renderer introduces, corrects polarity, applies a common crop, and normalises every signal to a common integrated loudness (ITU-R BS.1770) by scalar gain, without limiting or dynamics processing.
+2. **Alignment** (`src/align.py`) -- generalised cross-correlation over 15 windows, coherently averaged so that a single ambiguous peak cannot dominate the estimate. Reports the peak ratio and the residual lag after correction.
+3. **Loudness** (`src/loudness.py`) -- self-contained ITU-R BS.1770 implementation, validated against `ffmpeg`'s `ebur128`.
+4. **Scoring** (`src/run_bamq.m`, `src/run_binaqual.py`) -- each reference/test pair scored by both models.
+5. **Analysis** (`analysis/analysis.R`) -- rankings, cross-content concordance, anchor sensitivity, and cue diagnostics referred to discrimination thresholds.
+
+Outputs are written deterministically: float WAVs are stripped of the wall-clock timestamp libsndfile writes into the PEAK chunk, so a re-run of the conditioning stage is bit-reproducible.
 
 ## Citation
 
@@ -75,10 +96,10 @@ If you use this data or analysis code, please cite the main paper:
 
 ## Notes
 
-- the input signals for the evaluation are binaural renders of the [*"Deus Ex Machina"*](https://push.fm/fl/achpg-deusexmachina) 7OA choral recording, encoded to various immersive audio formats
-- The analysis script uses algorithmic metric selection (correlation-based) with no hard-coded parameters
-- All analytical choices are justified in the paper
-- The analysis pipeline can be adapted for different datasets by replacing `data/evaluation.txt`
+- the input signals for the evaluation are binaural renders of three recordings, among them the [*"Deus Ex Machina"*](https://push.fm/fl/achpg-deusexmachina) 7OA choral production, encoded to various immersive audio formats
+- All values reported in the paper are generated by `analysis.R` and consumed as LaTeX macros; none are transcribed by hand
+- Kendall's coefficient of concordance is reported with a Monte-Carlo permutation p-value alongside the chi-squared approximation, the latter being unreliable with three blocks
+- The analysis pipeline can be adapted for different datasets by replacing the contents of `data/`
 - An interactive browser-based visualizer for the IKO loudspeaker layout used in the evaluation is available at [bmroz.eu/tools/42p-IKO-visualization](https://bmroz.eu/tools/42p-IKO-visualization/)
 
 ## License
@@ -91,7 +112,8 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 [cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
 [cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
 
+The Meta Audio360 SDK is **not** covered by this licence and is not included in this repository; see `pipeline/tbe/README.md`.
+
 ## Contact
 
 Bartłomiej Mróz · bartlomiej.mroz@pg.edu.pl · Department of Multimedia Systems, Gdańsk University of Technology · [bmroz.eu](https://bmroz.eu)
-
