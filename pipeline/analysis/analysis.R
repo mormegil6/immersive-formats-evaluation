@@ -80,7 +80,21 @@ cat(sprintf("residual lag after correction: max |%d| samples\n",
 put_value("maxLatencyMs", max(nz$abs_ms), 0)
 put_value("medLatencyMs", median(nz$abs_ms), 2)
 put_value("nLatencyAffected", nrow(nz), 0)
+put_value("nStimuli", nrow(cond), 0)
+## Denominator for the conditioning statements: the reference of each item
+## is trivially aligned and in-polarity with itself, so the rendered
+## variants, not all conditioned signals, are what those counts are out of.
+put_value("nStimuliTest", sum(cond$is_reference == 0), 0)
 put_value("nPolarityInverted", sum(cond$polarity == -1), 0)
+## Which stimuli were inverted matters for how the result is described: a
+## pattern confined to one variant is not a property of the renderers.
+if (sum(cond$polarity == -1)) {
+  inv <- cond[cond$polarity == -1, ]
+  cat(sprintf("polarity inverted: %s\n",
+              paste(sprintf("%s/%s", inv$item, inv$variant), collapse = ", ")))
+  put_value("polarityInvertedVariants",
+            paste(sort(unique(inv$variant)), collapse = ", "))
+}
 put_value("maxLoudnessSpread", max(cond$lufs_before) - min(cond$lufs_before), 1)
 put_value("maxResidualLag", max(abs(cond$residual_lag_samples)), 0)
 
@@ -397,6 +411,53 @@ for (mt in PRIMARY_METRICS) {
 
 
 ## ===========================================================================
+## 6b. Does the dense virtual-loudspeaker intermediate help?
+## ===========================================================================
+## The 42pIKO-[Format] chains were built to answer this: each re-encodes the
+## same 42-point spherical intermediate to a commercial format, so comparing it
+## with the native encode of the same format isolates what the intermediate
+## contributes.
+##
+## One case has to be excluded rather than reported. Where the native format is
+## itself the anchor, it scores against itself and the difference is an artefact
+## of the comparison, not a result -- for 42pIKO->Atmos under the Atmos anchor
+## this produces an apparent -0.68, which would invert the conclusion if taken
+## at face value. Such cells are dropped.
+cat("\n=== 6b. virtual-loudspeaker intermediate vs native encode ===\n")
+
+iko_pairs <- list(c("42pIKO-Atmos", "Atmos", "Atmos"),
+                  c("42pIKO-Sony360RA", "Sony360RA", "Sony"),
+                  c("42pIKO-Auro3D", "Auro3D", "Auro"))
+iko_tab <- data.frame()
+for (pr in iko_pairs) {
+  route <- pr[1]; native <- pr[2]; tag <- pr[3]
+  for (mt in PRIMARY_METRICS) {
+    cells <- data.frame()
+    for (a in unique(d$anchor)) {
+      if (a == native) next                     # degenerate: native is the anchor
+      for (it in unique(d$item)) {
+        x <- d[[mt]][d$anchor == a & d$item == it & d$variant == route]
+        y <- d[[mt]][d$anchor == a & d$item == it & d$variant == native]
+        if (length(x) == 1 && length(y) == 1 && is.finite(x) && is.finite(y))
+          cells <- rbind(cells, data.frame(anchor = a, item = it, diff = x - y))
+      }
+    }
+    if (!nrow(cells)) next
+    sfx <- if (mt == "LS") "LS" else "OV"
+    iko_tab <- rbind(iko_tab, data.frame(
+      route = route, native = native, metric = mt,
+      mean_diff = mean(cells$diff), n_pos = sum(cells$diff > 0), n = nrow(cells)))
+    put_value(paste0("ikoGain", tag, sfx), mean(cells$diff), 3)
+    put_value(paste0("ikoPos",  tag, sfx), sum(cells$diff > 0), 0)
+    put_value(paste0("ikoN",    tag, sfx), nrow(cells), 0)
+    cat(sprintf("%-18s vs %-10s %-16s mean %+0.3f  positive in %d/%d cells\n",
+                route, native, mt, mean(cells$diff), sum(cells$diff > 0), nrow(cells)))
+  }
+}
+write_figure_data(iko_tab, file.path(FIG_DIR, "Data_13_IntermediateVsNative.csv"))
+
+
+## ===========================================================================
 ## 7. Spatial cue diagnostics referred to JNDs  (Reviewer 2)
 ## ===========================================================================
 cat("\n=== 7. cue diagnostics vs JND ===\n")
@@ -507,6 +568,14 @@ if (file.exists(seg_path)) {
   sg <- utils::read.csv(seg_path, stringsAsFactors = FALSE)
   sg <- sg[sg$anchor == "7OA" & sg$is_anchor == 0, ]
   for (v in c("overall_measure", "LS")) sg[[v]] <- as.numeric(sg[[v]])
+  ## The window index is carried in the pair_id suffix (..._seg0). Deriving it
+  ## here rather than relying on a separate column keeps this section working
+  ## whichever way the segment table was assembled.
+  if (is.null(sg$segment) || all(is.na(sg$segment))) {
+    sg$segment <- sub("^.*__(seg[0-9]+)$", "\\1", sg$pair_id)
+    if (!all(grepl("^seg[0-9]+$", sg$segment)))
+      stop("cannot derive segment index from pair_id in ", seg_path)
+  }
   n_seg <- length(unique(sg$segment))
 
   ## Per (item, variant) mean over segments, against the single centred excerpt.

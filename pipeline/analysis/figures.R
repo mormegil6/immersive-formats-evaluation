@@ -108,8 +108,11 @@ with_device(fig(4, "DeviationFromReference"), 5.6, 4.6, function() {
 
 ## --- Fig 5: anchor sensitivity ---------------------------------------------
 with_device(fig(5, "AnchorSensitivity"), 7.4, 5.0, function() {
-  op <- par(mfrow = c(1, 2), mar = c(4.2, 9.5, 2.4, 1), mgp = c(2.5, 0.7, 0),
-            las = 1, cex.axis = 0.8, tcl = -0.3)
+  ## The wide left margin carries the variant labels, which squeezes the plot
+  ## region; without extra room on the right the panel (b) title runs off the
+  ## device.  Hence the wider right margin and slightly smaller title.
+  op <- par(mfrow = c(1, 2), mar = c(4.2, 9.5, 2.4, 2.6), mgp = c(2.5, 0.7, 0),
+            las = 1, cex.axis = 0.8, cex.main = 0.95, tcl = -0.3)
   on.exit(par(op), add = TRUE)
   for (mt in c("overall_measure", "LS")) {
     sub <- d[!d$is_anchor, ]

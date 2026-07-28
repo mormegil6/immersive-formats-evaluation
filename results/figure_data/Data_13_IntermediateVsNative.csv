@@ -1,0 +1,7 @@
+"route","native","metric","mean_diff","n_pos","n"
+"42pIKO-Atmos","Atmos","overall_measure",-0.0071255,4,6
+"42pIKO-Atmos","Atmos","LS",0.0278524875137048,6,6
+"42pIKO-Sony360RA","Sony360RA","overall_measure",0.0935181111111111,7,9
+"42pIKO-Sony360RA","Sony360RA","LS",0.0350569503391749,9,9
+"42pIKO-Auro3D","Auro3D","overall_measure",-0.091,0,9
+"42pIKO-Auro3D","Auro3D","LS",-0.0571726190868427,0,9
