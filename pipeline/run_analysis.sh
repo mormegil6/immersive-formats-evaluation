@@ -24,7 +24,7 @@ echo "scored pairs: $(tail -n +2 "$DATA/metrics_long.csv" | wc -l | tr -d ' ')"
   echo "control arm : $(tail -n +2 "$DATA/metrics_long_noalign.csv" | wc -l | tr -d ' ')"
 
 cd "$HERE/analysis"
-Rscript analysis.R "$DATA" "$FIGS" "$PAPER/values.tex"
+Rscript analysis.R "$DATA" "$FIGS" "$PAPER/values.tex" "$PROJECT/results/analysis_report.md"
 
 # Publish the figures the manuscript includes.
 mkdir -p "$PAPER/figures"

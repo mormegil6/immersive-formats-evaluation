@@ -33,6 +33,7 @@ For methodology, interpretation, and results discussion, please refer to the mai
 │   ├── run_analysis.sh                # analysis + figures + values.tex
 │   └── requirements.txt
 ├── results/
+│   ├── analysis_report.md             # full analysis output, generated
 │   ├── figure_data/                   # one table per figure
 │   └── figures/                       # the figures as published
 └── README.md
@@ -60,6 +61,14 @@ Rscript pipeline/analysis/analysis.R data results/figure_data values.tex
 ```
 
 This regenerates every figure, every per-figure data table, and the macro file consumed by the manuscript. All values reported in the paper are emitted as LaTeX macros rather than transcribed, so the manuscript cannot drift from the analysis.
+
+Passing a fourth argument writes a readable transcript of the run:
+
+```bash
+Rscript pipeline/analysis/analysis.R data results/figure_data values.tex results/analysis_report.md
+```
+
+`results/analysis_report.md` is a verbatim capture of that output rather than a hand-written summary, so it cannot disagree with the numbers the analysis produced. `results/figures/` holds the figures as they appear in the paper, so a regenerated figure can be compared against the published one.
 
 ### Full pipeline, including scoring
 
