@@ -26,6 +26,24 @@ third-party copy, and whether a given copy may be used is a licensing question
 for whoever obtains it. We do not redistribute it here and do not point at any
 particular source.
 
+**A working installer mirror exists**, maintained by the late Prof. Angelo
+Farina: <https://angelofarina.it/Public/FB360/>, with separate Mac and Windows
+builds and the FFmpeg/GPAC/Python dependencies the installer needs. It is a
+personal academic page with no institutional backing and no listed maintainer
+since his passing, so we archived it in full on the Wayback Machine rather than
+link it and hope: every installer, dependency and readme on that page --
+including one that was previously uncaptured despite the page itself having
+snapshots going back years -- is now saved at full size, verified byte-for-byte
+against the live files:
+
+- <https://web.archive.org/web/20260511153757/https://angelofarina.it/Public/FB360/> (top-level index)
+- <https://web.archive.org/web/20260729102037/https://angelofarina.it/Public/FB360/Mac-new-2023/> (Intel + Apple Silicon build, 493 MB)
+- <https://web.archive.org/web/20260729102634/https://angelofarina.it/Public/FB360/Win/> (Windows VST, 129 MB)
+- <https://web.archive.org/web/20260729103004/https://angelofarina.it/Public/FB360/Mac-old/> (Intel/Big Sur build, plus a `mac-M1-support.zip` we had not seen referenced elsewhere)
+
+If the source page goes offline, everything needed to install FB360 is still
+retrievable from those links.
+
 **Version used here.** The results in the paper were produced against Audio360
 (TBE AudioEngine) **1.7.12**, x86_64. If you have a copy, you can check yours
 with:
