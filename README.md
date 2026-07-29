@@ -1,6 +1,6 @@
 [![R](https://img.shields.io/badge/R-4.0+-blue.svg)]() [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)]() [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
-# Immersive Audio Formats Evaluation - Supplementary Materials
+# Latency and Anchor Dependence in Objective Binaural Quality Metrics - Supplementary Materials
 
 Supplementary materials for the paper:
 
