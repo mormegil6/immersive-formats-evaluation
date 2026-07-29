@@ -288,8 +288,6 @@ for (mt in c("overall_measure","LS","ILDdiff","ITDdiff")) {
   put_value(paste0("pperm", sfx, "Items"),
             fmt_perm_p(concord$p_perm[concord$metric == mt]))
 }
-put_value("pOverallItems", concord$p[concord$metric == "overall_measure"], 4)
-put_value("pLSItems",      concord$p[concord$metric == "LS"], 4)
 put_value("kendallPermB", format(KENDALL_PERM_B, big.mark = ","))
 
 ## Which formats are content-stable and which are not?

@@ -85,6 +85,15 @@ Scoring additionally requires:
 
 The binaural stimuli themselves are not redistributed here, as they derive from commercially released productions.
 
+`run_all.sh` expects the two model implementations and the conditioned stimuli in a `bamq-binaqual/` directory beside `pipeline/`. That directory is deliberately not part of this repository: it holds third-party model code and audio derived from commercial productions. Supply your own copies and, if they live elsewhere, override the defaults:
+
+```bash
+BAMQ_DIR=/path/to/combinedaudioqualitymodel \
+BINAQUAL_DIR=/path/to/Binaqual \
+LEGACY_ROOT=/path/to/stimuli \
+  ./pipeline/run_all.sh
+```
+
 ## Pipeline
 
 1. **Conditioning** (`src/prepare_stimuli.py`) -- estimates and removes the transport latency each renderer introduces, corrects polarity, applies a common crop, and normalises every signal to a common integrated loudness (ITU-R BS.1770) by scalar gain, without limiting or dynamics processing.

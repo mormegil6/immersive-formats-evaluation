@@ -7,6 +7,13 @@ pipeline/tbe/include/
 pipeline/tbe/lib/
 pipeline/tbe/tbe_render
 
+# The two objective models and the conditioned stimuli. Third-party code and
+# audio derived from commercial productions; neither is redistributed here.
+# run_all.sh looks for them under this directory by default -- supply your own
+# copies and override BAMQ_DIR, BINAQUAL_DIR and LEGACY_ROOT if they live
+# elsewhere. See README.
+bamq-binaqual/
+
 # Build and environment artefacts
 __pycache__/
 *.pyc
