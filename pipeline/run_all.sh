@@ -19,12 +19,12 @@ PROJECT="$(cd "$HERE/.." && pwd)"
 PYTHON="${PYTHON:-$HOME/.venvs/immersive-benchmarking/bin/python}"
 MATLAB="${MATLAB:-/Applications/MATLAB_R2025a.app/bin/matlab}"
 
-LEGACY_ROOT="${LEGACY_ROOT:-$PROJECT/Immersive Benchmarking/Stimuli}"
+LEGACY_ROOT="${LEGACY_ROOT:-$PROJECT/bamq-binaqual/Stimuli}"
 REVISION_ROOT="${REVISION_ROOT:-$HOME/Downloads/benchmarking_renders_reviews/stimuli}"
 PREPARED_ROOT="${PREPARED_ROOT:-$HOME/Downloads/benchmarking_renders_reviews/stimuli_prepared}"
 
-BINAQUAL_DIR="${BINAQUAL_DIR:-$PROJECT/Immersive Benchmarking/Binaqual}"
-BAMQ_DIR="${BAMQ_DIR:-$PROJECT/Immersive Benchmarking/combinedaudioqualitymodel-master}"
+BINAQUAL_DIR="${BINAQUAL_DIR:-$PROJECT/bamq-binaqual/Binaqual}"
+BAMQ_DIR="${BAMQ_DIR:-$PROJECT/bamq-binaqual/combinedaudioqualitymodel-master}"
 
 OUT="$PROJECT/data/revision"
 MANIFEST="$OUT/stimulus_conditioning.csv"

@@ -16,7 +16,7 @@ For every content item the script
 Usage
 -----
     python src/prepare_stimuli.py \
-        --legacy-root   "<...>/Immersive Benchmarking/Stimuli" \
+        --legacy-root   "<...>/bamq-binaqual/Stimuli" \
         --revision-root "<...>/benchmarking_renders_reviews/stimuli" \
         --out-root      "<...>/stimuli_prepared" \
         --manifest      "../data/revision/stimulus_conditioning.csv"
