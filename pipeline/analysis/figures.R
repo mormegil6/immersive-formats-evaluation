@@ -107,13 +107,22 @@ with_device(fig(4, "DeviationFromReference"), 5.6, 4.6, function() {
 
 
 ## --- Fig 5: anchor sensitivity ---------------------------------------------
-with_device(fig(5, "AnchorSensitivity"), 7.4, 5.0, function() {
+with_device(fig(5, "AnchorSensitivity"), 7.4, 5.3, function() {
   ## The wide left margin carries the variant labels, which squeezes the plot
   ## region; without extra room on the right the panel (b) title runs off the
-  ## device.  Hence the wider right margin and slightly smaller title.
+  ## device.  Hence the wider right margin and slightly smaller title.  The
+  ## bottom outer margin carries the shared anchor legend, which previously sat
+  ## inside panel (a) and overlapped the lowest format rows.
   op <- par(mfrow = c(1, 2), mar = c(4.2, 9.5, 2.4, 2.6), mgp = c(2.5, 0.7, 0),
-            las = 1, cex.axis = 0.8, cex.main = 0.95, tcl = -0.3)
+            las = 1, cex.axis = 0.8, cex.main = 0.95, tcl = -0.3,
+            oma = c(2.2, 0, 0, 0))
   on.exit(par(op), add = TRUE)
+  ## Offset the three anchors vertically within each format row.  Drawn at a
+  ## common y they coincide wherever two anchors give a similar mean, which hid
+  ## the 7OA points nearly everywhere: 7OA is plotted first, so the two later
+  ## anchors covered it and only two of the three colours were ever visible.
+  dodge <- setNames(seq(0.24, -0.24, length.out = length(COL_ANCHOR)),
+                    names(COL_ANCHOR))
   for (mt in c("overall_measure", "LS")) {
     sub <- d[!d$is_anchor, ]
     vars <- rev(ord_overall)
@@ -124,18 +133,26 @@ with_device(fig(5, "AnchorSensitivity"), 7.4, 5.0, function() {
          xlab = if (mt == "LS") "BINAQUAL LS" else "BAM-Q overall measure",
          main = if (mt == "LS") "(b) localisation similarity" else "(a) perceptual quality")
     axis(2, at = y, labels = names(y), tick = FALSE)
-    abline(h = y, col = "grey92", lwd = 6, lend = 1)
+    ## One band per format row, tall enough to enclose the dodged points.  Drawn
+    ## in user units so it tracks the dodge rather than a fixed line width.
+    rect(par("usr")[1], y - 0.42, par("usr")[2], y + 0.42,
+         col = "grey94", border = NA)
     for (a in names(COL_ANCHOR)) {
       s <- sub[sub$anchor == a, ]
       if (!nrow(s)) next
       mu <- tapply(s[[mt]], droplevels(s$variant), mean)
-      points(mu[names(y)], y, pch = 21, bg = COL_ANCHOR[[a]], col = "white",
-             cex = 1.3)
+      points(mu[names(y)], y + dodge[[a]], pch = 21, bg = COL_ANCHOR[[a]],
+             col = "white", cex = 1.15)
     }
-    if (mt == "overall_measure")
-      legend("bottomleft", paste("anchor:", names(COL_ANCHOR)), pch = 21,
-             pt.bg = COL_ANCHOR, col = "white", bty = "n", cex = 0.75)
   }
+  ## Shared legend in the bottom outer margin, clear of both panels.
+  op2 <- par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0),
+             new = TRUE)
+  plot(0, 0, type = "n", axes = FALSE, xlab = "", ylab = "")
+  legend("bottom", horiz = TRUE, bty = "n", cex = 0.75, pt.cex = 1.15,
+         legend = paste("anchor:", names(COL_ANCHOR)), pch = 21,
+         pt.bg = unname(COL_ANCHOR), col = "white")
+  par(op2)
 })
 
 
