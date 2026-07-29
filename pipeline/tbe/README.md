@@ -26,6 +26,19 @@ third-party copy, and whether a given copy may be used is a licensing question
 for whoever obtains it. We do not redistribute it here and do not point at any
 particular source.
 
+**Version used here.** The results in the paper were produced against Audio360
+(TBE AudioEngine) **1.7.12**, x86_64. If you have a copy, you can check yours
+with:
+
+```bash
+grep -h TBE_AUDIOENGINE_VERSION include/TBE_AudioEngine.h
+lipo -archs lib/libAudio360.dylib
+```
+
+Recording this matters more than it normally would: the suite is archived, no
+canonical download remains, and copies in circulation may differ. A different
+engine version may not reproduce the numbers here exactly.
+
 To build, once you have it:
 
 1. Place the Audio360 headers in `include/` and `libAudio360.dylib` in `lib/`.
