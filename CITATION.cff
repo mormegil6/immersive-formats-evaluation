@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this data or analysis code, please cite it as below."
+type: software
+title: "Latency and Anchor Dependence in Objective Binaural Quality Metrics -- Supplementary Materials"
+authors:
+  - family-names: "Mróz"
+    given-names: "Bartłomiej"
+    affiliation: "Gdańsk University of Technology"
+  - family-names: "Danowski"
+    given-names: "Przemysław"
+    affiliation: "Fryderyk Chopin University of Music, Warsaw"
+repository-code: "https://github.com/mormegil6/immersive-formats-evaluation"
+license: CC-BY-4.0
+version: 1.0.0
+preferred-citation:
+  type: article
+  title: "Latency and anchor dependence in objective binaural quality metrics: a cross-format evaluation of immersive audio"
+  authors:
+    - family-names: "Mróz"
+      given-names: "Bartłomiej"
+    - family-names: "Danowski"
+      given-names: "Przemysław"
+  journal: "Applied Acoustics"
+  publisher:
+    name: "Elsevier"
+  year: 2026
+  status: submitted
