@@ -42,6 +42,54 @@ Everything else in this repository runs without the SDK. Only the TBE variant
 depends on it, and the scored results for that variant are already included in
 `data/metrics_long.csv`, so the analysis reproduces without rebuilding it.
 
+## Using it
+
+**Platform.** The encoder is portable Python. The renderer is not: it links a
+macOS `libAudio360.dylib`, and the shipped library is Intel-only, so on Apple
+Silicon the binary must be built for x86_64 and invoked under Rosetta. Meta also
+shipped Windows and Linux builds of the SDK; the renderer has not been built or
+tested against those here, and `tbe_render.cpp` would need its link flags
+adjusted.
+
+**Dependencies.** The encoder needs only `numpy` and `soundfile`:
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install numpy soundfile
+```
+
+The pinned `pipeline/requirements.txt` at the repository root is for the full
+scoring pipeline and is not needed for TBE work.
+
+**Encode ambiX to 8-channel TBE** (no SDK required, any platform):
+
+```bash
+.venv/bin/python ambix_to_tbe.py master_ambix.wav out_tbe.wav
+```
+
+Input is ambiX (ACN/SN3D), third order or higher; inputs with more than 16
+channels are truncated, so a 7OA master can be fed in directly. To check the
+result against a TBE file produced by the FB360 encoder:
+
+```bash
+.venv/bin/python ambix_to_tbe.py master_ambix.wav --check reference_tbe.wav
+```
+
+**Render TBE to binaural** (needs the SDK and a built `tbe_render`):
+
+```bash
+.venv/bin/python render_tbe.py out_tbe.wav binaural.wav
+.venv/bin/python render_tbe.py out_tbe.wav binaural.wav --verify reference_binaural.wav
+```
+
+`render_tbe.py` accepts 8-channel (TBE_8) or 10-channel (TBE_8_2) input and
+writes a stereo WAV. `--verify` compares against a reference decode and is the
+quickest way to confirm the chain is working rather than merely running: a
+correct decode is a genuine binaural signal, not a passthrough or a silent file.
+
+**If the build succeeds but the renderer produces silence**, the usual cause is
+an architecture mismatch between the binary and the dylib. Check with
+`file tbe_render` and `lipo -archs lib/libAudio360.dylib`; both must be x86_64.
+
 ## Note on latency
 
 The Audio360 renderer introduces a transport delay of roughly 74 ms. This is a
