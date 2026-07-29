@@ -17,12 +17,19 @@ to binaural offline, without a DAW.
 is not redistributable. The headers (`include/`), the shared library (`lib/`) and
 the compiled `tbe_render` binary are therefore excluded from this repository.
 
-To build:
+The FB360 Spatial Workstation is discontinued and the project has been archived
+at <https://github.com/facebookarchive/facebook-360-spatial-workstation>. That
+archive carries the documentation and helper scripts but **not** the SDK itself:
+`include/` and `libAudio360.dylib` are not in it. Meta no longer distributes the
+suite, so obtaining the SDK now means an existing local installation or a
+third-party copy, and whether a given copy may be used is a licensing question
+for whoever obtains it. We do not redistribute it here and do not point at any
+particular source.
 
-1. Obtain the Audio360 SDK from Meta (it ships with the FB360 Spatial
-   Workstation).
-2. Place the headers in `include/` and `libAudio360.dylib` in `lib/`.
-3. Build for x86_64 -- the shipped library is Intel-only, so on Apple Silicon the
+To build, once you have it:
+
+1. Place the Audio360 headers in `include/` and `libAudio360.dylib` in `lib/`.
+2. Build for x86_64 -- the shipped library is Intel-only, so on Apple Silicon the
    binary runs under Rosetta:
 
    ```bash
