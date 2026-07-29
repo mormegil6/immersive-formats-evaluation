@@ -107,13 +107,13 @@ with_device(fig(4, "DeviationFromReference"), 5.6, 4.6, function() {
 
 
 ## --- Fig 5: anchor sensitivity ---------------------------------------------
-with_device(fig(5, "AnchorSensitivity"), 7.4, 5.3, function() {
+with_device(fig(5, "AnchorSensitivity"), 9.0, 5.3, function() {
   ## The wide left margin carries the variant labels, which squeezes the plot
   ## region; without extra room on the right the panel (b) title runs off the
   ## device.  Hence the wider right margin and slightly smaller title.  The
   ## bottom outer margin carries the shared anchor legend, which previously sat
   ## inside panel (a) and overlapped the lowest format rows.
-  op <- par(mfrow = c(1, 2), mar = c(4.2, 9.5, 2.4, 2.6), mgp = c(2.5, 0.7, 0),
+  op <- par(mfrow = c(1, 2), mar = c(4.2, 8.6, 2.4, 1.4), mgp = c(2.5, 0.7, 0),
             las = 1, cex.axis = 0.8, cex.main = 0.95, tcl = -0.3,
             oma = c(2.2, 0, 0, 0))
   on.exit(par(op), add = TRUE)
@@ -141,16 +141,17 @@ with_device(fig(5, "AnchorSensitivity"), 7.4, 5.3, function() {
       s <- sub[sub$anchor == a, ]
       if (!nrow(s)) next
       mu <- tapply(s[[mt]], droplevels(s$variant), mean)
-      points(mu[names(y)], y + dodge[[a]], pch = 21, bg = COL_ANCHOR[[a]],
-             col = "white", cex = 1.15)
+      points(mu[names(y)], y + dodge[[a]], pch = PCH_ANCHOR[[a]],
+             bg = COL_ANCHOR[[a]], col = "white", cex = 1.25)
     }
   }
   ## Shared legend in the bottom outer margin, clear of both panels.
   op2 <- par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0),
              new = TRUE)
   plot(0, 0, type = "n", axes = FALSE, xlab = "", ylab = "")
-  legend("bottom", horiz = TRUE, bty = "n", cex = 0.75, pt.cex = 1.15,
-         legend = paste("anchor:", names(COL_ANCHOR)), pch = 21,
+  legend("bottom", horiz = TRUE, bty = "n", cex = 0.75, pt.cex = 1.25,
+         legend = paste("anchor:", names(COL_ANCHOR)),
+         pch = unname(PCH_ANCHOR[names(COL_ANCHOR)]),
          pt.bg = unname(COL_ANCHOR), col = "white")
   par(op2)
 })

@@ -61,6 +61,11 @@ ITEM_LABEL <- c(DeusExMachina = "Deus Ex Machina (choir)",
 COL_ITEM   <- c(DeusExMachina = "#0072B2", BigBand = "#D55E00", KWARTET = "#009E73")
 COL_FAMILY <- c("Ambisonics" = "#0072B2", "Channel/Object" = "#D55E00")
 COL_ANCHOR <- c("7OA" = "#0072B2", "5OA" = "#E69F00", "Atmos" = "#CC79A7")
+## Shape as well as colour, so the anchors stay separable in greyscale print and
+## under colour-vision deficiency: the 5OA and Atmos hues differ by only about
+## 11 of 255 greyscale levels, i.e. not at all once the figure is printed B&W.
+## Deliberately not the PCH_ITEM set (21/22/24) beyond the shared circle.
+PCH_ANCHOR <- c("7OA" = 21, "5OA" = 23, "Atmos" = 25)
 PCH_ITEM   <- c(DeusExMachina = 21, BigBand = 22, KWARTET = 24)
 
 ## ------------------------------------------------------------------ loading
@@ -225,8 +230,17 @@ write_figure_data <- function(df, path) {
 ## Render the same plotting function to a vector PDF (for LaTeX) and a raster
 ## PNG (for quick inspection).  `draw` takes no arguments.
 with_device <- function(basepath, width, height, draw) {
-  grDevices::pdf(paste0(basepath, ".pdf"), width = width, height = height,
-                 useDingbats = FALSE)
+  ## cairo_pdf, not pdf().  R's own PostScript/PDF device maps the ASCII hyphen
+  ## onto the font's "minus" glyph, so format names like 42pIKO-Atmos came out
+  ## as 42pIKO<minus>Atmos.  cairo_pdf writes a real hyphen.  Fall back to
+  ## pdf() where cairo is unavailable, accepting the minus there.
+  if (capabilities("cairo")) {
+    grDevices::cairo_pdf(paste0(basepath, ".pdf"), width = width,
+                         height = height)
+  } else {
+    grDevices::pdf(paste0(basepath, ".pdf"), width = width, height = height,
+                   useDingbats = FALSE)
+  }
   draw(); grDevices::dev.off()
   grDevices::png(paste0(basepath, ".png"), width = width, height = height,
                  units = "in", res = 300)
