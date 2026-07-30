@@ -12,6 +12,7 @@ authors:
 repository-code: "https://github.com/mormegil6/immersive-formats-evaluation"
 license: CC-BY-4.0
 version: 1.0.0
+doi: 10.5281/zenodo.21699442
 preferred-citation:
   type: article
   title: "Latency and anchor dependence in objective binaural quality metrics: a cross-format evaluation of immersive audio"
