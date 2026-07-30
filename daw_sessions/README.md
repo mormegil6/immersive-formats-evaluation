@@ -1,0 +1,53 @@
+# DAW sessions
+
+The render chains behind the format variants in `data/`, provided so the routing,
+panning and plugin parameters behind each variant are auditable rather than
+implicit. These reference external media by relative path and do not embed
+audio -- the underlying stimuli are not redistributed here, for the same
+commercial-rights reason given in the top-level README.
+
+## What is here
+
+| file | purpose |
+|---|---|
+| `reaper/master_multiformat_render.RPP` | The canonical REAPER session covering all three content items (KWARTET, BigBand, DeusExMachina) and every format variant: 7OA/42pIKO/42pIKO-hemi masters, Dolby Atmos native 9.1.6, Auro-3D native 13.1, Sony 360RA native 5.1.4.4 plus its object layers, MagLS binaural renders (7OA/5OA/42pIKO, via the IEM Plug-in Suite), IAMF/Eclipsa, TBE, and the YouTube first-order ambisonic mix. |
+| `reaper/presets/vst3-WalkMix Creator.ini` | Saved Sony 360 WalkMix Creator panner presets. Drop into `~/Library/Application Support/REAPER/presets/` to restore them in the plugin's preset browser. See the caveat below. |
+| `protools/auro3d_render.ptx` | The Pro Tools session for the Auro-3D 13.1 native render, using the Auro-3D AAX chain (Panner, MixEngine, Bus, DownMixControl, AuxEngine, Headphone monitor). |
+
+## Software versions
+
+The results in the paper were produced with:
+
+| tool | version |
+|---|---|
+| IEM Plug-in Suite | 1.15.0 |
+| Fiedler Audio Dolby Atmos Composer/Beam | 1.6.1 |
+| Sony 360 WalkMix Creator | 2.1.2 |
+| Auro-3D Creative Tools Suite (AAX, Pro Tools) | 3.0.6 |
+| Auro-3D Creative Tools Suite (AU/VST3, REAPER) | 1.1.2 |
+| Auro-3D Encoder Service | 2.2.0 |
+| IAMF Eclipsa plugins | 1.4.4 |
+| Resonance Audio | 1.1.1 |
+| REAPER | 7.78 (macOS arm64) |
+| Pro Tools | 26.4.1.179 |
+
+TBE / Meta Audio360 is documented separately in `pipeline/tbe/README.md`
+(Audio360 AudioEngine 1.7.12), since it has its own build and licensing notes.
+
+## Known limitation: WalkMix Creator instance restriction
+
+The 360 WalkMix Creator plugin refuses to run more than one active
+instance/session at once -- not a license-seat check, but a constraint of its
+own internal cross-instance routing. In practice this meant saved presets did
+not reliably carry over when moving between projects, and required manually
+toggling plugin instances off and on as a workaround while working in the
+combined multi-format session. The included preset file captures the panner
+state correctly, but loading it may still require working around this same
+instance restriction if another project has the plugin open at the same time.
+
+## What is deliberately excluded
+
+Bounced/rendered audio, `Session File Backups/`, REAPER `AutoSaves/` and
+`Backups/`, and the raw stimuli themselves are not included, for the same
+reason the top-level README does not redistribute the binaural stimuli: they
+derive from commercially released productions.

@@ -36,6 +36,9 @@ For methodology, interpretation, and results discussion, please refer to the mai
 │   ├── analysis_report.md             # full analysis output, generated
 │   ├── figure_data/                   # one table per figure
 │   └── figures/                       # the figures as published
+├── daw_sessions/
+│   ├── reaper/                        # REAPER render session + WalkMix Creator presets
+│   └── protools/                      # Pro Tools Auro-3D render session
 └── README.md
 ```
 
