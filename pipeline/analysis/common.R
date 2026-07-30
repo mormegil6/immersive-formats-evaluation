@@ -54,8 +54,8 @@ VARIANT_ORDER <- c("7OA", "5OA", "3OA-IAMF", "2OA-TBE", "1OA-YT", "42pIKO",
 
 ITEM_ORDER <- c("DeusExMachina", "BigBand", "KWARTET")
 ITEM_LABEL <- c(DeusExMachina = "Deus Ex Machina (choir)",
-                BigBand        = "Big Band (jazz)",
-                KWARTET        = "Kwartet (quartet)")
+                BigBand        = "Love for Sale (big band)",
+                KWARTET        = "For Turiya (quartet)")
 
 ## Colour-blind-safe palette (Okabe & Ito), used consistently across figures.
 COL_ITEM   <- c(DeusExMachina = "#0072B2", BigBand = "#D55E00", KWARTET = "#009E73")
@@ -263,15 +263,23 @@ dotplot_by_variant <- function(df, value, order_by = NULL, xlab = "",
   op <- par(mar = c(3.8, 8.2, 2.0, 1.6), mgp = c(2.3, 0.6, 0), las = 1,
             cex.axis = 0.78, cex.main = 0.95, cex.lab = 0.85, tcl = -0.3)
   on.exit(par(op), add = TRUE)
-  plot(NA, xlim = xlim, ylim = c(0.4, length(vars) + 0.6),
+  ## Extra headroom only when there is a reference label to fit above the
+  ## topmost row; other callers keep the original range untouched.
+  ytop <- length(vars) + if (!is.null(ref_label)) 0.75 else 0.6
+  plot(NA, xlim = xlim, ylim = c(0.4, ytop),
        xlab = xlab, ylab = "", yaxt = "n", main = main,
        log = if (log_x) "x" else "", bty = "n")
   axis(2, at = y, labels = names(y), tick = FALSE, cex.axis = 0.75)
   abline(h = y, col = "grey92", lwd = 6, lend = 1)
   if (!is.null(ref_line)) {
-    abline(v = ref_line, lty = 2, col = "grey35")
-    if (!is.null(ref_label))
-      mtext(ref_label, side = 3, at = ref_line, cex = 0.7, col = "grey25", line = 0.1)
+    if (!is.null(ref_label)) {
+      ## Stop the line short of the label -- abline() spans the full plot
+      ## height and would run straight through the text.
+      segments(ref_line, 0.4, ref_line, length(vars) + 0.25, lty = 2, col = "grey35")
+      text(ref_line, length(vars) + 0.55, ref_label, cex = 0.65, col = "grey25")
+    } else {
+      abline(v = ref_line, lty = 2, col = "grey35")
+    }
   }
   for (it in levels(droplevels(df$item))) {
     s <- df[df$item == it, ]

@@ -75,7 +75,14 @@ with_device(fig(3, "QualitySpace"), 5.6, 5.0, function() {
             cex.axis = 0.85)
   on.exit(par(op), add = TRUE)
   W <- d[d$anchor == "7OA", ]
-  plot(W$overall_measure, W$LS, type = "n", bty = "n",
+  ## Labels are drawn to the right of every point (pos = 4); default axis
+  ## padding accounts only for the data range, not for that text, so the
+  ## rightmost label -- the three coincident 7OA self-comparisons, all at
+  ## the same (overall_measure, LS) since a signal compared to itself is
+  ## identical regardless of item -- ran off the plot edge and was clipped.
+  xr <- range(W$overall_measure)
+  xr <- xr + c(-0.05, 0.22) * diff(xr)
+  plot(W$overall_measure, W$LS, type = "n", bty = "n", xlim = xr,
        xlab = "BAM-Q overall measure", ylab = "BINAQUAL LS")
   for (it in items) {
     s <- W[W$item == it, ]
@@ -87,11 +94,12 @@ with_device(fig(3, "QualitySpace"), 5.6, 5.0, function() {
     text(s$overall_measure, s$LS, labels = as.character(s$variant),
          pos = 4, cex = 0.5, col = "grey35", offset = 0.35)
   }
-  legend("topleft", c(ITEM_LABEL[items], "7OA reference"),
-         pch = c(PCH_ITEM[items], 21),
-         pt.bg = c(COL_ITEM[items], "white"),
-         col = c(rep("white", length(items)), "grey30"),
-         bty = "n", cex = 0.72)
+  ## No separate "7OA reference" swatch: anchor points keep each item's own
+  ## shape and outline colour, just white-filled, so no single glyph would
+  ## represent them accurately. The caption states the open-marker convention
+  ## in words instead.
+  legend("topleft", ITEM_LABEL[items], pch = PCH_ITEM[items],
+         pt.bg = COL_ITEM[items], col = "white", bty = "n", cex = 0.72)
 })
 
 
