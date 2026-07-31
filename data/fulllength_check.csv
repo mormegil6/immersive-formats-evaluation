@@ -1,0 +1,2 @@
+pair_id,item,anchor,variant,is_anchor,SNR_dc,SNR_ac,SNR_dc_fix,SNR_ac_fix,OPM,OPM_fix,binQ,ILDdiff,ITDdiff,IVSdiff,overall_measure,seconds
+KWARTET__7OA__3OA-IAMF,KWARTET,7OA,3OA-IAMF,0,1.56173,2.03507,1.56173,1.27391,52.9267,55.9605,79,2710.74,5.52178e-05,0.0167413,0.470515,746.2

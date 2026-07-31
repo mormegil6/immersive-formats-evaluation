@@ -24,6 +24,7 @@ For methodology, interpretation, and results discussion, please refer to the mai
 │   ├── metrics_long_noalign.csv       # control arm, renderer latency left uncompensated
 │   ├── metrics_long_segments.csv      # five-window segmented arm
 │   ├── conditioning_*.csv             # alignment and loudness diagnostics per run
+│   ├── fulllength_check.csv           # one pair scored at full length, as a window-choice control
 │   └── pairs*.csv                     # reference/test pair definitions
 ├── pipeline/
 │   ├── src/                           # conditioning and scoring
