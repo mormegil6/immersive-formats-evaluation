@@ -17,6 +17,9 @@ commercial-rights reason given in the top-level README.
 | `iem_layouts/IKO_42.json` | The 42-point geodesic icosahedron loudspeaker layout, loadable in both the IEM AllRADecoder and the IEM MultiEncoder. This is the intermediate representation the 42pIKO variants are built on. |
 | `iem_layouts/IKO_42_hemisphere.json` | The hemispherical subset used for the Auro-3D chain: 26 loudspeakers at or above the horizon plus a single point at $-90^\circ$ standing in for the lower hemisphere, 27 entries in total. The 26 excludes that $-Z$ point, which is why the Auro-3D variant is described throughout as 26-point. |
 | `protools/auro3d_render.ptx` | The Pro Tools session for the Auro-3D 13.1 native render, using the Auro-3D AAX chain (Panner, MixEngine, Bus, DownMixControl, AuxEngine, Headphone monitor). |
+| `protools/presets/Auro-Panner/42pIKO_hemi26p_*.tfx` | 26 saved Auro-Panner presets, one per point of the hemispherical subset (see `IKO_42_hemisphere.json`), positioning each of the 26 objects. |
+| `protools/presets/Auro-MixEngine/42pIKO_hemi26p_AuroMixingEngine.tfx` | Saved Auro-MixEngine preset for the same chain. |
+| `protools/presets/Auro-Bus/42pIKO_hemi26p_AuroBus.tfx` | Saved Auro-Bus preset for the same chain. |
 
 ## Software versions
 
