@@ -12,6 +12,9 @@ commercial-rights reason given in the top-level README.
 |---|---|
 | `reaper/master_multiformat_render.RPP` | The canonical REAPER session covering all three content items (KWARTET, BigBand, DeusExMachina) and every format variant: 7OA/42pIKO/42pIKO-hemi masters, Dolby Atmos native 9.1.6, Auro-3D native 13.1, Sony 360RA native 5.1.4.4 plus its object layers, MagLS binaural renders (7OA/5OA/42pIKO, via the IEM Plug-in Suite), IAMF/Eclipsa, TBE, and the YouTube first-order ambisonic mix. |
 | `reaper/presets/vst3-WalkMix Creator.ini` | Saved Sony 360 WalkMix Creator panner presets. Drop into `~/Library/Application Support/REAPER/presets/` to restore them in the plugin's preset browser. See the caveat below. |
+| `reaper/presets/vst3-fiedler audio atmos beam.ini` | Saved Fiedler Audio Dolby Atmos Beam presets, same install location. The ones used here are `42p IKO MODv2 01-16`, `17-32` and `33-42` for the full 42-point Atmos object chain, and `42p IKO hemisphere 01-16` and `17-26` for the 26-point hemispherical subset. The file also carries presets for layouts not used in this study (t-designs, spherical coverings), left in place rather than pruned. |
+| `iem_layouts/IKO_42.json` | The 42-point geodesic icosahedron loudspeaker layout, loadable in both the IEM AllRADecoder and the IEM MultiEncoder. This is the intermediate representation the 42pIKO variants are built on. |
+| `iem_layouts/IKO_42_hemisphere.json` | The hemispherical subset used for the Auro-3D chain: 26 loudspeakers at or above the horizon plus a single point at $-90^\circ$ standing in for the lower hemisphere, 27 entries in total. The 26 excludes that $-Z$ point, which is why the Auro-3D variant is described throughout as 26-point. |
 | `protools/auro3d_render.ptx` | The Pro Tools session for the Auro-3D 13.1 native render, using the Auro-3D AAX chain (Panner, MixEngine, Bus, DownMixControl, AuxEngine, Headphone monitor). |
 
 ## Software versions
