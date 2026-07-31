@@ -34,16 +34,18 @@ The results in the paper were produced with:
 TBE / Meta Audio360 is documented separately in `pipeline/tbe/README.md`
 (Audio360 AudioEngine 1.7.12), since it has its own build and licensing notes.
 
-## Known limitation: WalkMix Creator instance restriction
+## Known limitation: single-master instance restrictions
 
-The 360 WalkMix Creator plugin refuses to run more than one active
-instance/session at once -- not a license-seat check, but a constraint of its
-own internal cross-instance routing. In practice this meant saved presets did
-not reliably carry over when moving between projects, and required manually
-toggling plugin instances off and on as a workaround while working in the
-combined multi-format session. The included preset file captures the panner
-state correctly, but loading it may still require working around this same
-instance restriction if another project has the plugin open at the same time.
+Two of the plugin suites route audio internally between their own instances
+and therefore tolerate only one active master instance at a time: 360 WalkMix
+Creator and the Fiedler Audio Dolby Atmos Composer. This is not a license-seat
+check but a constraint of their internal cross-instance routing. In practice
+it meant saved presets did not reliably carry over when moving between
+projects, and required manually toggling plugin instances off and on as a
+workaround while working in the combined multi-format session, which hosts
+several format chains side by side. The included WalkMix preset file captures
+the panner state correctly, but loading it may still require working around
+the same restriction if another project has the plugin open at the same time.
 
 ## What is deliberately excluded
 
