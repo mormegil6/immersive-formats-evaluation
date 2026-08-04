@@ -15,21 +15,19 @@ abstract: "Supplementary materials for the Applied Acoustics paper \"Latency and
 repository-code: "https://github.com/mormegil6/immersive-formats-evaluation"
 url: "https://github.com/mormegil6/immersive-formats-evaluation"
 license: CC-BY-4.0
-version: 1.1.0
+version: 1.1.1
 doi: 10.5281/zenodo.21699442
 keywords:
-  - binaural audio
-  - objective quality metrics
-  - immersive audio
-  - spatial audio
   - ambisonics
-  - BAM-Q
-  - BINAQUAL
-  - Dolby Atmos
-  - Auro-3D
-  - IAMF
-  - latency
-  - reproducible research
+  - audio-evaluation
+  - audio-quality
+  - binaural
+  - higher-order-ambisonics
+  - immersive-audio
+  - psychoacoustics
+  - r
+  - spatial-audio
+  - statistics
 preferred-citation:
   type: article
   title: "Latency and anchor dependence in objective binaural quality metrics: a cross-format evaluation of immersive audio"
