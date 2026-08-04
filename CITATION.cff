@@ -5,9 +5,11 @@ title: "Latency and Anchor Dependence in Objective Binaural Quality Metrics -- S
 authors:
   - family-names: "Mróz"
     given-names: "Bartłomiej"
+    orcid: "https://orcid.org/0000-0002-8983-9050"
     affiliation: "Gdańsk University of Technology"
   - family-names: "Danowski"
     given-names: "Przemysław"
+    orcid: "https://orcid.org/0000-0002-3628-7547"
     affiliation: "Chopin University of Music, Warsaw"
 repository-code: "https://github.com/mormegil6/immersive-formats-evaluation"
 license: CC-BY-4.0
@@ -19,8 +21,10 @@ preferred-citation:
   authors:
     - family-names: "Mróz"
       given-names: "Bartłomiej"
+      orcid: "https://orcid.org/0000-0002-8983-9050"
     - family-names: "Danowski"
       given-names: "Przemysław"
+      orcid: "https://orcid.org/0000-0002-3628-7547"
   journal: "Applied Acoustics"
   publisher:
     name: "Elsevier"
