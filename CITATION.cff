@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this data or analysis code, please cite it as below."
 type: software
-title: "Latency and Anchor Dependence in Objective Binaural Quality Metrics -- Supplementary Materials"
+title: "Latency and Anchor Dependence in Objective Binaural Quality Metrics - Supplementary Materials"
 authors:
   - family-names: "Mróz"
     given-names: "Bartłomiej"
