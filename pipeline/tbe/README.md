@@ -20,11 +20,12 @@ the compiled `tbe_render` binary are therefore excluded from this repository.
 The FB360 Spatial Workstation is discontinued and the project has been archived
 at <https://github.com/facebookarchive/facebook-360-spatial-workstation>. That
 archive carries the documentation and helper scripts but **not** the SDK itself:
-`include/` and `libAudio360.dylib` are not in it. Meta no longer distributes the
-suite, so obtaining the SDK now means an existing local installation or a
-third-party copy, and whether a given copy may be used is a licensing question
-for whoever obtains it. We do not redistribute it here and do not point at any
-particular source.
+`include/` and `libAudio360.dylib` are not in it, and neither do the installer
+packages: the Mac bundle holds the `.pkg`, examples and the guide, and the
+Windows one holds the VST plugins plus its ffmpeg/GPAC/Python dependencies.
+The SDK was always a separate developer download. Whether a given copy may be
+used is a licensing question for whoever obtains it; we do not redistribute it
+here.
 
 **A working installer mirror exists**, maintained by the late Prof. Angelo
 Farina: <https://angelofarina.it/Public/FB360/>, with separate Mac and Windows
@@ -41,8 +42,20 @@ against the live files:
 - <https://web.archive.org/web/20260729102634/https://angelofarina.it/Public/FB360/Win/> (Windows VST, 129 MB)
 - <https://web.archive.org/web/20260729103004/https://angelofarina.it/Public/FB360/Mac-old/> (Intel/Big Sur build, plus a `mac-M1-support.zip` we had not seen referenced elsewhere)
 
-If the source page goes offline, everything needed to install FB360 is still
-retrievable from those links.
+**The SDK itself is hosted separately on the same site**, in a different
+directory that the FB360 index above does not link, which is why it took a
+while to find. It was not captured by the Wayback Machine at all until we
+requested it on 2026-08-15; these are the first snapshots that exist:
+
+- <https://web.archive.org/web/20260815073925/https://www.angelofarina.it/Public/Facebook-Spatial-Workstation/Download/SDK/> (index)
+- <https://web.archive.org/web/20260815073938/https://www.angelofarina.it/Public/Facebook-Spatial-Workstation/Download/SDK/Audio360_SDK_1.7.12-cd52f5f44271.zip> (1.7.12, 388 MB, the version used here)
+- <https://web.archive.org/web/20260815073950/https://www.angelofarina.it/Public/Facebook-Spatial-Workstation/Download/SDK/Audio360_SDK_1.3.0.zip> (1.3.0)
+
+Unzipping gives `Audio360/include/` and `Audio360/macOS/libAudio360.dylib`,
+which is what `tbe_render.cpp` builds against.
+
+If the source page goes offline, everything needed to install FB360 and to
+build against its SDK is still retrievable from the links above.
 
 **Version used here.** The results in the paper were produced against Audio360
 (TBE AudioEngine) **1.7.12**, x86_64. If you have a copy, you can check yours
