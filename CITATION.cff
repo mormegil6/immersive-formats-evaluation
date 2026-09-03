@@ -11,7 +11,7 @@ authors:
     given-names: "Przemysław"
     orcid: "https://orcid.org/0000-0002-3628-7547"
     affiliation: "Chopin University of Music, Warsaw"
-abstract: "Supplementary materials for the Applied Acoustics paper \"Latency and anchor dependence in objective binaural quality metrics: a cross-format evaluation of immersive audio\": the stimulus conditioning and scoring pipeline, scored BAM-Q and BINAQUAL predictions for every format, content item and reference anchor, the render-chain configuration behind each commercial format variant, and the reproducible statistical analysis with the per-figure data tables behind every figure in the paper."
+abstract: "Supplementary materials for the Applied Acoustics paper \"Latency and anchor dependence in objective binaural quality metrics: a cross-format evaluation of immersive audio\": the stimulus conditioning and scoring pipeline, scored BAM-Q and BINAQUAL predictions for every format, content item and reference anchor, the render-chain configuration behind each commercial format variant, the verification of the latency correction below one sample, and the reproducible statistical analysis with the per-figure data tables behind every figure in the paper."
 repository-code: "https://github.com/mormegil6/immersive-formats-evaluation"
 url: "https://github.com/mormegil6/immersive-formats-evaluation"
 license: CC-BY-4.0
