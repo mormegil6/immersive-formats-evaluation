@@ -2,8 +2,8 @@
 ##
 ##   Rscript figure_recording_setup.R [out_dir]
 ##
-## Requested by a reviewer: the microphone configuration was not clear from
-## prose alone.  Two panels are needed because the defining feature of this
+## The microphone configuration is not clear from prose alone, hence this
+## schematic.  Two panels are needed because the defining feature of this
 ## setup is vertical: the choir was deliberately layered in height so that the
 ## scene occupies the lower hemisphere as well as the horizon, which is what
 ## makes it a full-sphere test case and what the channel-based formats cannot

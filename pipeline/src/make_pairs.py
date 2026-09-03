@@ -1,13 +1,13 @@
 """Step 2 -- enumerate the reference/test pairs to be scored.
 
 The primary analysis anchors every comparison on the 7OA master of the same
-content item.  Reviewer comment R2.1 asks what happens when that anchor
-changes, so two further anchors are enumerated:
+content item.  So that the dependence on that choice can be measured rather
+than assumed, two further anchors are enumerated:
 
   5OA    -- a lower-order anchor from the same (scene-based) family, isolating
             the effect of anchor *fidelity* while holding the family constant;
-  Atmos  -- the native 9.1.6 channel-based render, isolating the effect of
-            anchor *family*, which is the specific bias the reviewer raises.
+  Atmos  -- the native 9.1.6 channel-based render, varying the anchor's
+            *family* along with its renderer and HRTF set.
 
 Each anchor is paired against all variants of its item, including itself: the
 self-comparison is both the "reference" row of the figures and a determinism

@@ -25,6 +25,7 @@ For methodology, interpretation, and results discussion, please refer to the mai
 │   ├── metrics_long_segments.csv      # five-window segmented arm
 │   ├── conditioning_*.csv             # alignment and loudness diagnostics per run
 │   ├── fulllength_check.csv           # one pair scored at full length, as a window-choice control
+│   ├── subsample_*.csv                # sub-sample verification of the latency correction
 │   └── pairs*.csv                     # reference/test pair definitions
 ├── pipeline/
 │   ├── src/                           # conditioning and scoring
@@ -107,6 +108,20 @@ LEGACY_ROOT=/path/to/stimuli \
 5. **Analysis** (`analysis/analysis.R`) -- rankings, cross-content concordance, anchor sensitivity, and cue diagnostics referred to discrimination thresholds.
 
 Outputs are written deterministically: float WAVs are stripped of the wall-clock timestamp libsndfile writes into the PEAK chunk, so a re-run of the conditioning stage is bit-reproducible.
+
+## Sub-sample verification of the latency correction
+
+Integer alignment leaves the fractional part of each renderer's group delay, recorded per variant as `subsample_residual` in `data/conditioning_60s.csv`. Five scripts, run from `pipeline/` with the pinned Python environment, measure what that residual does to the scores and whether what integer alignment leaves behind is a delay at all:
+
+| script | what it does | output |
+|---|---|---|
+| `src/subsample_sensitivity.py` | delays selected test signals by 0.125, 0.25 and 0.5 samples (exact frequency-domain phase ramp) and re-scores them with BINAQUAL | `data/subsample_sensitivity.csv` |
+| `src/fractional_correct.py` | writes a copy of a prepared stimulus set with every non-reference file delayed by its own measured residual, and re-estimates the residual on the result | corrected stimulus tree (not redistributed) |
+| `src/subsample_compare.py` | merges the re-score of that tree (`data/pairs_60s_subsample.csv`) with the baseline: per-pair change, ordering agreement, family gaps, reversals | `data/subsample_correction_comparison.csv` |
+| `src/subsample_selftest.py` | delays each reference by a known +0.3 samples, measures the residual with `align.estimate`, and applies the correction with each sign: "+" must leave a small residual, "-" must diverge | `data/subsample_selftest.csv` |
+| `src/subsample_phase_slope.py` | asks whether what integer alignment leaves behind is a delay at all: coherence-weighted fit of the cross-spectrum phase against frequency (100–8000 Hz, over 15 windows), reporting the slope as a delay together with the fit's intercept and RMS residual, which are near zero only if a constant delay really describes the pair. Run for every item's reference against the sensitivity study's test variants and against a synthetic +0.3-sample copy of itself as a control | `data/subsample_phase_slope.csv` |
+
+`analysis/analysis.R` (section 12) reads these tables and emits the values the paper quotes from them as LaTeX macros, with assertions on the qualitative claims. What the correction changes, and why it is reported rather than carried into the primary analysis, is discussed in the paper.
 
 ## Citation
 

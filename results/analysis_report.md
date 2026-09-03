@@ -151,4 +151,46 @@ ILD above 1 dB: 8 of 11; above 4.4 dB: 0
 overall_measure  Kendall tau(centred, 5-segment mean) = +0.872   mean |diff| = 0.0150   mean within-item SD = 0.0212
 LS               Kendall tau(centred, 5-segment mean) = +0.947   mean |diff| = 0.0030   mean within-item SD = 0.0042
 
+=== 12. sub-sample verification ===
+residual after integer alignment: n = 33, median 0.261, max 0.492 samples
+reference vs delayed copy of itself, LS drop at 0.125 samples: 11--13% (3 items)
+reference vs delayed copy of itself, LS drop at 0.250 samples: 21--25% (3 items)
+reference vs delayed copy of itself, LS drop at 0.500 samples: 37--42% (3 items)
+real variants at +0.25 samples: |rel change| median 1.5%, range 0.5--6.0% (n = 9)
+|rel dLS| median 1.06%  p90 6.44%  max 33.69% (n = 99 non-self pairs; max on KWARTET/42pIKO-Atmos under the Atmos anchor)
+Kendall tau, baseline vs corrected ordering:
+  DeusExMachina  7OA    +1.000
+  DeusExMachina  5OA    +0.964
+  DeusExMachina  Atmos  +0.855
+  BigBand        7OA    +1.000
+  BigBand        5OA    +0.964
+  BigBand        Atmos  +0.927
+  KWARTET        7OA    +0.964
+  KWARTET        5OA    +0.927
+  KWARTET        Atmos  +0.818
+family gap under each anchor, baseline -> corrected:
+  7OA    +0.1188 -> +0.1133
+  5OA    +0.0698 -> +0.0710
+  Atmos  -0.0611 -> -0.0582
+items reversing between 7OA and Atmos anchors: baseline 3/3, corrected 3/3
+fractional-delay self-test (injected offset; residual after '+' / '-' correction):
+  BigBand        +0.300 -> measured -0.2847, after '+' -0.0141, after '-' +0.4047
+  DeusExMachina  +0.300 -> measured -0.2987, after '+' -0.0012, after '-' +0.4002
+  KWARTET        +0.300 -> measured -0.2936, after '+' -0.0062, after '-' +0.4017
+phase-slope fit: is what integer alignment left behind a delay at all?
+  BigBand        7OA+0.3    synthetic slope    +0.300  parabolic -0.2847  intercept   -0.00 rad  residual   0.00 rad  coh 1.000
+  BigBand        5OA        real      slope   -17.009  parabolic -0.3048  intercept   +5.11 rad  residual  14.32 rad  coh 0.875
+  BigBand        42pIKO     real      slope    +8.796  parabolic +0.2331  intercept   -1.04 rad  residual   1.55 rad  coh 0.950
+  BigBand        Atmos      real      slope  -511.686  parabolic +0.1637  intercept  +28.15 rad  residual  63.86 rad  coh 0.588
+  DeusExMachina  7OA+0.3    synthetic slope    +0.300  parabolic -0.2987  intercept   -0.00 rad  residual   0.00 rad  coh 1.000
+  DeusExMachina  5OA        real      slope  +116.103  parabolic +0.0464  intercept  -23.90 rad  residual  17.82 rad  coh 0.715
+  DeusExMachina  42pIKO     real      slope    -0.013  parabolic +0.3356  intercept   -0.03 rad  residual   0.14 rad  coh 0.937
+  DeusExMachina  Atmos      real      slope    -4.093  parabolic +0.3977  intercept   +0.83 rad  residual  26.66 rad  coh 0.323
+  KWARTET        7OA+0.3    synthetic slope    +0.300  parabolic -0.2936  intercept   -0.00 rad  residual   0.00 rad  coh 1.000
+  KWARTET        5OA        real      slope   +93.115  parabolic +0.2875  intercept  -21.51 rad  residual  19.81 rad  coh 0.829
+  KWARTET        42pIKO     real      slope    -4.229  parabolic +0.3181  intercept   -2.11 rad  residual   2.74 rad  coh 0.956
+  KWARTET        Atmos      real      slope  +154.053  parabolic -0.1241  intercept  -29.18 rad  residual  39.17 rad  coh 0.632
+real pairs: 9; not described by a constant delay (residual > 1 rad): 8; residual 1.5--63.9 rad, |intercept| up to 29 rad; coherence 0.32--0.96
+
 done.
+```

@@ -29,7 +29,18 @@ VALUES    <- if (length(args) >= 3) args[3] else
 REPORT    <- if (length(args) >= 4) args[4] else NA_character_
 if (!is.na(REPORT)) {
   dir.create(dirname(REPORT), recursive = TRUE, showWarnings = FALSE)
-  con <- file(REPORT, open = "wt")
+  ## A run that stops early (an assertion below, say) must not leave the
+  ## previous, complete-looking report in place.
+  unlink(REPORT)
+  ## The capture goes to a local temporary file and is copied into place at
+  ## the end of the script (see the last lines). Written straight into a
+  ## folder that another process may rewrite (a sync client, say), the file
+  ## can be replaced under the open connection, after which every later
+  ## write is lost and the report stops silently after the first flushed
+  ## block. A top-level on.exit() does not run under Rscript, so the close
+  ## is explicit.
+  report_tmp <- tempfile("analysis_report_", fileext = ".md")
+  con <- file(report_tmp, open = "wt")
   writeLines(c(
     "# Analysis report",
     "",
@@ -38,7 +49,6 @@ if (!is.na(REPORT)) {
     "",
     "```"), con)
   sink(con, split = TRUE)
-  on.exit({ sink(); writeLines("```", con); close(con) }, add = TRUE)
 }
 
 source(file.path(HERE, "common.R"))
@@ -258,7 +268,7 @@ put_value("worstFormat", as.character(rank_tab$variant[nrow(rank_tab)]))
 
 
 ## ===========================================================================
-## 4. Generalisability across content  (Reviewers 1, 2, 3)
+## 4. Generalisability across content
 ## ===========================================================================
 cat("\n=== 4. cross-content concordance ===\n")
 
@@ -338,7 +348,7 @@ write_figure_data(
 
 
 ## ===========================================================================
-## 6. Anchor sensitivity  (Reviewer 2)
+## 6. Anchor sensitivity
 ## ===========================================================================
 cat("\n=== 6. anchor sensitivity ===\n")
 
@@ -473,7 +483,7 @@ write_figure_data(iko_tab, file.path(FIG_DIR, "Data_13_IntermediateVsNative.csv"
 
 
 ## ===========================================================================
-## 7. Spatial cue diagnostics referred to JNDs  (Reviewer 2)
+## 7. Spatial cue diagnostics referred to JNDs
 ## ===========================================================================
 cat("\n=== 7. cue diagnostics vs JND ===\n")
 
@@ -618,6 +628,179 @@ if (file.exists(seg_path)) {
   P$k <- NULL
 }
 
+## ===========================================================================
+## 12. Sub-sample verification of the latency correction
+##     Inputs come from pipeline/src/subsample_sensitivity.py and from the
+##     re-score on fractionally corrected stimuli (fractional_correct.py,
+##     run_binaqual.py, subsample_compare.py). The numbers the manuscript
+##     quotes are re-derived here so that they reach the text as macros like
+##     every other statistic, and the qualitative claims are asserted so that
+##     a re-run which changed them would stop rather than leave stale prose.
+## ===========================================================================
+sens_path <- file.path(DATA_DIR, "subsample_sensitivity.csv")
+corr_path <- file.path(DATA_DIR, "subsample_correction_comparison.csv")
+if (file.exists(sens_path) && file.exists(corr_path)) {
+  cat("\n=== 12. sub-sample verification ===\n")
+  pct_range <- function(x) {
+    lo <- formatC(min(x), format = "f", digits = 0)
+    hi <- formatC(max(x), format = "f", digits = 0)
+    if (lo == hi) paste0(lo, "\\%") else paste0(lo, "--", hi, "\\%")
+  }
+
+  ## Residual left by integer alignment, one value per rendered variant.
+  res <- abs(as.numeric(cond$subsample_residual[cond$is_reference == 0]))
+  cat(sprintf("residual after integer alignment: n = %d, median %.3f, max %.3f samples\n",
+              length(res), stats::median(res), max(res)))
+  put_value("nRenderedVariants", length(res), 0)
+  put_value("subResidualMedian", stats::median(res), 2)
+  put_value("subResidualMax", max(res), 2)
+
+  ## Sensitivity sweep: LS at each offset against the same file at offset zero.
+  ss <- utils::read.csv(sens_path, stringsAsFactors = FALSE)
+  ss$LS <- as.numeric(ss$LS); ss$offset_samples <- as.numeric(ss$offset_samples)
+  base <- ss[ss$offset_samples == 0, c("item", "variant", "LS")]
+  names(base)[3] <- "LS0"
+  ss <- merge(ss[ss$offset_samples != 0, ], base, by = c("item", "variant"))
+  ss$drop_pct <- 100 * (ss$LS0 - ss$LS) / ss$LS0
+  self <- ss[ss$variant == "7OA", ]
+  for (o in c(0.125, 0.25, 0.5)) {
+    dr <- self$drop_pct[self$offset_samples == o]
+    cat(sprintf("reference vs delayed copy of itself, LS drop at %.3f samples: %s (%d items)\n",
+                o, gsub("\\\\", "", pct_range(dr)), length(dr)))
+  }
+  put_value("subSelfDropEighth",  pct_range(self$drop_pct[self$offset_samples == 0.125]))
+  put_value("subSelfDropQuarter", pct_range(self$drop_pct[self$offset_samples == 0.25]))
+  put_value("subSelfDropHalf",    pct_range(self$drop_pct[self$offset_samples == 0.5]))
+  real <- ss[ss$variant != "7OA" & ss$offset_samples == 0.25, ]
+  cat(sprintf("real variants at +0.25 samples: |rel change| median %.1f%%, range %.1f--%.1f%% (n = %d)\n",
+              stats::median(abs(real$drop_pct)), min(abs(real$drop_pct)),
+              max(abs(real$drop_pct)), nrow(real)))
+  put_value("subRealMedianQuarter", stats::median(abs(real$drop_pct)) / 100, percent = TRUE)
+
+  ## Re-score on fractionally corrected stimuli, against the baseline. The
+  ## median and 90th percentile are the same order statistics that
+  ## subsample_compare.py prints (sorted, index n %/% 2 and floor(0.9 n)), so
+  ## the two agree exactly rather than to within an interpolation rule.
+  cc <- utils::read.csv(corr_path, stringsAsFactors = FALSE)
+  for (v in c("LS_baseline", "LS_corrected", "rel_dLS_pct")) cc[[v]] <- as.numeric(cc[[v]])
+  ns <- cc[cc$is_anchor == 0, ]
+  ar <- sort(abs(ns$rel_dLS_pct))
+  rel_med <- ar[length(ar) %/% 2 + 1]
+  rel_p90 <- ar[floor(0.9 * length(ar)) + 1]
+  worst   <- ns[which.max(abs(ns$rel_dLS_pct)), ]
+  cat(sprintf("|rel dLS| median %.2f%%  p90 %.2f%%  max %.2f%% (n = %d non-self pairs; max on %s/%s under the %s anchor)\n",
+              rel_med, rel_p90, max(ar), length(ar), worst$item, worst$variant, worst$anchor))
+  ## The largest change is reported as occurring under the channel-based
+  ## anchor; stop if a re-run moved it elsewhere.
+  stopifnot(worst$anchor == "Atmos")
+  put_value("subCorrRelMedian",  rel_med / 100, percent = TRUE)
+  put_value("subCorrRelPninety", rel_p90 / 100, percent = TRUE)
+  put_value("subCorrRelMax",     sprintf("%.0f\\%%", max(ar)))
+
+  cat("Kendall tau, baseline vs corrected ordering:\n")
+  tau_other <- c()
+  for (it in items) for (a in anchors) {
+    g <- ns[ns$item == it & ns$anchor == a, ]
+    tau <- stats::cor(g$LS_baseline, g$LS_corrected, method = "kendall")
+    cat(sprintf("  %-14s %-6s %+.3f\n", it, a, tau))
+    if (a == "7OA") put_value(paste0("subTau", it), tau, 2) else tau_other <- c(tau_other, tau)
+  }
+  put_value("subTauOtherMin", min(tau_other), 2)
+
+  ## Family gap (Ambisonics minus Channel/Object, anchors excluded as tests)
+  ## under each anchor, and the 7OA-vs-Atmos reversal per item.
+  fam_gap <- function(x, score, it = NULL) {
+    x <- x[!(x$variant %in% anchors), ]
+    if (!is.null(it)) x <- x[x$item == it, ]
+    mean(x[[score]][x$family == "Ambisonics"]) -
+      mean(x[[score]][x$family == "Channel/Object"])
+  }
+  cat("family gap under each anchor, baseline -> corrected:\n")
+  sign_kept <- 0
+  for (a in anchors) {
+    gb <- fam_gap(cc[cc$anchor == a, ], "LS_baseline")
+    gc <- fam_gap(cc[cc$anchor == a, ], "LS_corrected")
+    cat(sprintf("  %-6s %+.4f -> %+.4f\n", a, gb, gc))
+    sign_kept <- sign_kept + (sign(gb) == sign(gc))
+  }
+  flips <- function(score) sapply(items, function(it)
+    sign(fam_gap(cc[cc$anchor == "7OA", ], score, it)) !=
+      sign(fam_gap(cc[cc$anchor == "Atmos", ], score, it)))
+  fb <- flips("LS_baseline"); fc <- flips("LS_corrected")
+  cat(sprintf("items reversing between 7OA and Atmos anchors: baseline %d/%d, corrected %d/%d\n",
+              sum(fb), n_items, sum(fc), n_items))
+  ## The text says the gap keeps its sign under every anchor and reverses in
+  ## the same items as before; assert both.
+  stopifnot(sign_kept == length(anchors), identical(fb, fc))
+  put_value("subAnchorsSignKept", sign_kept, 0)
+  put_value("subFlipItemsLSCorrected", sum(fc), 0)
+}
+
+## Accuracy of the fractional correction, and whether what integer
+## alignment leaves behind is a delay at all (subsample_selftest.py and
+## subsample_phase_slope.py).
+st_path <- file.path(DATA_DIR, "subsample_selftest.csv")
+if (file.exists(st_path)) {
+  st <- utils::read.csv(st_path, stringsAsFactors = FALSE)
+  for (v in c("injected_samples", "measured_residual", "residual_after_plus",
+              "residual_after_minus")) st[[v]] <- as.numeric(st[[v]])
+  cat("fractional-delay self-test (injected offset; residual after '+' / '-' correction):\n")
+  for (i in seq_len(nrow(st)))
+    cat(sprintf("  %-14s %+.3f -> measured %+.4f, after '+' %+.4f, after '-' %+.4f\n",
+                st$item[i], st$injected_samples[i], st$measured_residual[i],
+                st$residual_after_plus[i], st$residual_after_minus[i]))
+  ## The '+' sign must leave a residual small against the injected offset
+  ## on every reference, and the '-' sign must make it worse.
+  stopifnot(all(abs(st$residual_after_plus) < 0.05),
+            all(abs(st$residual_after_minus) > abs(st$measured_residual)))
+  put_value("subSelfTestInjected", st$injected_samples[1], 1)
+  put_value("subSelfTestMaxResidual", max(abs(st$residual_after_plus)), 3)
+}
+ps_path <- file.path(DATA_DIR, "subsample_phase_slope.csv")
+if (file.exists(ps_path)) {
+  ps <- utils::read.csv(ps_path, stringsAsFactors = FALSE)
+  for (v in c("injected_samples", "parabolic_subsample", "delay_est_samples",
+              "phase_offset_rad", "resid_rms_rad", "median_coherence"))
+    ps[[v]] <- suppressWarnings(as.numeric(ps[[v]]))
+  syn <- ps[ps$kind == "synthetic", ]; rl <- ps[ps$kind == "real", ]
+  cat("phase-slope fit: is what integer alignment left behind a delay at all?\n")
+  for (i in seq_len(nrow(ps)))
+    cat(sprintf("  %-14s %-10s %-9s slope %+9.3f  parabolic %+.4f  intercept %+7.2f rad  residual %6.2f rad  coh %.3f\n",
+                ps$item[i], ps$variant[i], ps$kind[i], ps$delay_est_samples[i],
+                ps$parabolic_subsample[i], ps$phase_offset_rad[i],
+                ps$resid_rms_rad[i], ps$median_coherence[i]))
+  ## A constant delay makes the cross-spectrum phase a straight line through
+  ## the origin, so the control must return the injected delay with an
+  ## intercept and a residual of essentially zero. Where the intercept and
+  ## the residual are large the phase is not a line, and the fitted slope
+  ## is an artefact of fitting one to it rather than a delay; a residual
+  ## above one radian is far beyond what a delay could leave.
+  stopifnot(all(abs(syn$delay_est_samples - syn$injected_samples) < 0.01),
+            all(syn$median_coherence >= 0.995),
+            all(abs(syn$phase_offset_rad) < 0.01),
+            all(syn$resid_rms_rad < 0.01))
+  bad <- rl$resid_rms_rad > 1
+  cat(sprintf("real pairs: %d; not described by a constant delay (residual > 1 rad): %d; residual %.1f--%.1f rad, |intercept| up to %.0f rad; coherence %.2f--%.2f\n",
+              nrow(rl), sum(bad), min(rl$resid_rms_rad[bad]), max(rl$resid_rms_rad[bad]),
+              max(abs(rl$phase_offset_rad)), min(rl$median_coherence),
+              max(rl$median_coherence)))
+  put_value("nPhaseSlopePairs", nrow(rl), 0)
+  put_value("subSlopeInconsistent", sum(bad), 0)
+  put_value("subResidRealMin", min(rl$resid_rms_rad[bad]), 1)
+  put_value("subResidRealMax", max(rl$resid_rms_rad[bad]), 0)
+  put_value("subOffsetAbsMax", max(abs(rl$phase_offset_rad)), 0)
+  put_value("subCohRealMin", min(rl$median_coherence), 2)
+  put_value("subCohRealMax", max(rl$median_coherence), 2)
+  put_value("subCohSynthetic", min(syn$median_coherence), 2)
+}
+
 source(file.path(HERE, "figures.R"), local = TRUE)
 write_values(VALUES)
 cat("\ndone.\n")
+
+if (!is.na(REPORT)) {
+  sink()
+  writeLines("```", con)
+  close(con)
+  file.copy(report_tmp, REPORT, overwrite = TRUE)
+}

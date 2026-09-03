@@ -1,0 +1,13 @@
+item,variant,kind,injected_samples,lag_samples,parabolic_subsample,delay_est_samples,phase_offset_rad,resid_rms_rad,median_coherence
+BigBand,7OA+0.3,synthetic,0.3,0,-0.2847,0.3,-0.0,0.0,1.0
+BigBand,5OA,real,,0,-0.3048,-17.0085,5.106,14.32,0.875
+BigBand,42pIKO,real,,0,0.2331,8.7955,-1.036,1.547,0.95
+BigBand,Atmos,real,,0,0.1637,-511.6862,28.152,63.857,0.588
+DeusExMachina,7OA+0.3,synthetic,0.3,0,-0.2987,0.3,-0.0,0.0,1.0
+DeusExMachina,5OA,real,,0,0.0464,116.1027,-23.904,17.82,0.715
+DeusExMachina,42pIKO,real,,0,0.3356,-0.0133,-0.027,0.14,0.937
+DeusExMachina,Atmos,real,,0,0.3977,-4.093,0.832,26.663,0.323
+KWARTET,7OA+0.3,synthetic,0.3,0,-0.2936,0.3,-0.0,0.0,1.0
+KWARTET,5OA,real,,0,0.2875,93.1154,-21.511,19.814,0.829
+KWARTET,42pIKO,real,,0,0.3181,-4.2286,-2.108,2.744,0.956
+KWARTET,Atmos,real,,0,-0.1241,154.053,-29.178,39.168,0.632
